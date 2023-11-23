@@ -7,8 +7,13 @@
     padding-right: 5%;
 }
 
-.Label {
-    margin-top: 10px;
+.NameSection {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.LastNameSection {
+    flex: 1;
 }
 
 .LabelInfo {
@@ -18,12 +23,11 @@
 .LabelError {
     color: red;
     font-size: small;
+    width: 100%;
     text-align: end;
 }
 
 .ShowPasswordGroup {
-    margin-top: 10px;
-    margin-bottom: 10px;
     justify-content: end;
 }
 

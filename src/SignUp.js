@@ -53,7 +53,7 @@ function SignUp(props) {
         }
 
         props.onHide();
-    }
+    };
 
     return (
         <Modal
@@ -67,51 +67,81 @@ function SignUp(props) {
             </Modal.Header>
             <Modal.Body>
                 <div className="SignUp">
-                    <Form.Label for="name" className="Label">Nombre</Form.Label>
-                    <Form.Control
-                        id="name"
-                        placeholder="Kendrick"
-                        value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
-                    />
-                    <Form.Label className="LabelError">{userNameError}</Form.Label>
-                    <Form.Label for="name" className="Label">Apellido(s)</Form.Label>
-                    <Form.Control
-                        id="lastName"
-                        placeholder="Lamar"
-                        value={userLastName}
-                        onChange={(e) => setUserLastName(e.target.value)}
-                    />
-                    <Form.Label className="LabelError">{userLastNameError}</Form.Label>
-                    <Form.Label for="personalEmail" className="Label">
-                        Correo electrónico
-                    </Form.Label>
-                    <Form.Control
-                        id="personalEmail"
-                        type="email"
-                        placeholder="example@safedriver.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <Form.Label className="LabelError">{emailError}</Form.Label>
-                    <Form.Label for="pass" className="Label">Contraseña</Form.Label>
-                    <Form.Control
-                        id="pass"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="**********"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <Form.Label className="LabelError">{passwordError}</Form.Label>
-                    <InputGroup className="ShowPasswordGroup">
-                        <Form.Check
-                            id="check"
-                            className="ShowPasswordCheck"
-                            value={showPassword}
-                            onChange={() => setShowPassword((prev) => !prev)}
-                        />
-                        <Form.Label for="check" className="LabelInfo">Mostrar contraseña</Form.Label>
+                    <InputGroup>
+                        <div className="NameSection">
+                            <Form.Label for="name">
+                                Nombre
+                            </Form.Label>
+                            <Form.Control
+                                id="name"
+                                placeholder="Kendrick"
+                                value={userName}
+                                onChange={(e) => setUserName(e.target.value)}
+                            />
+                            <Form.Label className="LabelError">
+                                {userNameError}
+                            </Form.Label>
+                        </div>
+                        <div className="LastNameSection">
+                            <Form.Label for="name">
+                                Apellido(s)
+                            </Form.Label>
+                            <Form.Control
+                                id="lastName"
+                                placeholder="Lamar"
+                                value={userLastName}
+                                onChange={(e) =>
+                                    setUserLastName(e.target.value)
+                                }
+                            />
+                            <Form.Label className="LabelError">
+                                {userLastNameError}
+                            </Form.Label>
+                        </div>
                     </InputGroup>
+                    <div>
+                        <Form.Label for="personalEmail">
+                            Correo electrónico
+                        </Form.Label>
+                        <Form.Control
+                            id="personalEmail"
+                            type="email"
+                            placeholder="example@safedriver.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <Form.Label className="LabelError">
+                            {emailError}
+                        </Form.Label>
+                    </div>
+                    <div>
+                        <Form.Label for="pass">
+                            Contraseña
+                        </Form.Label>
+                        <Form.Control
+                            id="pass"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="**********"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <Form.Label className="LabelError">
+                            {passwordError}
+                        </Form.Label>
+                        <InputGroup className="ShowPasswordGroup">
+                            <Form.Check
+                                id="check"
+                                className="ShowPasswordCheck"
+                                value={showPassword}
+                                onChange={() =>
+                                    setShowPassword((prev) => !prev)
+                                }
+                            />
+                            <Form.Label for="check" className="LabelInfo">
+                                Mostrar contraseña
+                            </Form.Label>
+                        </InputGroup>
+                    </div>
                 </div>
             </Modal.Body>
             <Modal.Footer>

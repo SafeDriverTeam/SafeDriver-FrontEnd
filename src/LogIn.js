@@ -55,43 +55,49 @@ function LogIn(props) {
             </Modal.Header>
             <Modal.Body>
                 <div className="LogIn">
-                    <Form.Label for="personalEmail" className="Label">
-                        Correo electrónico
-                    </Form.Label>
-                    <Form.Control
-                        id="personalEmail"
-                        type="email"
-                        placeholder="example@safedriver.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <Form.Label className="LabelError">{emailError}</Form.Label>
-
-                    <Form.Label for="pass" className="Label">
-                        Contraseña
-                    </Form.Label>
-
-                    <Form.Control
-                        id="pass"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="**********"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <Form.Label className="LabelError">
-                        {passwordError}
-                    </Form.Label>
-                    <InputGroup className="ShowPasswordGroup">
-                        <Form.Check
-                            id="check"
-                            className="ShowPasswordCheck"
-                            value={showPassword}
-                            onChange={() => setShowPassword((prev) => !prev)}
-                        />
-                        <Form.Label for="check" className="LabelInfo">
-                            Mostrar contraseña
+                <div>
+                        <Form.Label for="personalEmail">
+                            Correo electrónico
                         </Form.Label>
-                    </InputGroup>
+                        <Form.Control
+                            id="personalEmail"
+                            type="email"
+                            placeholder="example@safedriver.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <Form.Label className="LabelError">
+                            {emailError}
+                        </Form.Label>
+                    </div>
+                    <div>
+                        <Form.Label for="pass">
+                            Contraseña
+                        </Form.Label>
+                        <Form.Control
+                            id="pass"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="**********"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <Form.Label className="LabelError">
+                            {passwordError}
+                        </Form.Label>
+                        <InputGroup className="ShowPasswordGroup">
+                            <Form.Check
+                                id="check"
+                                className="ShowPasswordCheck"
+                                value={showPassword}
+                                onChange={() =>
+                                    setShowPassword((prev) => !prev)
+                                }
+                            />
+                            <Form.Label for="check" className="LabelInfo">
+                                Mostrar contraseña
+                            </Form.Label>
+                        </InputGroup>
+                    </div>
                 </div>
             </Modal.Body>
             <Modal.Footer>
