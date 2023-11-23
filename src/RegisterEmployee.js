@@ -1,5 +1,5 @@
 import { Button, Form, InputGroup } from "react-bootstrap";
-import "./CSS/RegisterEmployee.css";
+import "./css/RegisterEmployee.css";
 import React, { useState } from "react";
 
 function RegisterEmployee() {

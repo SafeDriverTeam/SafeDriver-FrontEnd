@@ -1,4 +1,4 @@
-import "./CSS/LogIn.css";
+import "./css/LogIn.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";

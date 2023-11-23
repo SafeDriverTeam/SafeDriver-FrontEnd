@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import RegisterEmployee from "./RegisterEmployee";
-import "./CSS/App.css";
+import "./css/App.css";
 
 function App() {
     return (
