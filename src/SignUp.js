@@ -7,10 +7,53 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 function SignUp(props) {
     const [userName, setUserName] = useState("");
+    const [userNameError, setUserNameError] = useState("");
     const [userLastName, setUserLastName] = useState("");
+    const [userLastNameError, setUserLastNameError] = useState("");
     const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordError, setPasswordError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+
+    const handleSignUp = () => {
+        setUserNameError("");
+        setUserLastNameError("");
+        setEmailError("");
+        setPasswordError("");
+
+        if (userName === "") {
+            setUserNameError("El nombre es requerido");
+            return;
+        }
+
+        if (userLastName === "") {
+            setUserLastNameError("El apellido es requerido");
+            return;
+        }
+
+        if (email === "") {
+            setEmailError("El correo electrónico es requerido");
+            return;
+        }
+
+        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+            setEmailError("El correo electrónico no es válido");
+            return;
+        }
+
+        if (password === "") {
+            setPasswordError("La contraseña es requerida");
+            return;
+        }
+
+        if (password.length < 8) {
+            setPasswordError("La contraseña debe tener al menos 8 caracteres");
+            return;
+        }
+
+        props.onHide();
+    }
 
     return (
         <Modal
@@ -31,6 +74,7 @@ function SignUp(props) {
                         value={userName}
                         onChange={(e) => setUserName(e.target.value)}
                     />
+                    <Form.Label className="LabelError">{userNameError}</Form.Label>
                     <Form.Label for="name" className="Label">Apellido(s)</Form.Label>
                     <Form.Control
                         id="lastName"
@@ -38,6 +82,7 @@ function SignUp(props) {
                         value={userLastName}
                         onChange={(e) => setUserLastName(e.target.value)}
                     />
+                    <Form.Label className="LabelError">{userLastNameError}</Form.Label>
                     <Form.Label for="personalEmail" className="Label">
                         Correo electrónico
                     </Form.Label>
@@ -48,7 +93,7 @@ function SignUp(props) {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-
+                    <Form.Label className="LabelError">{emailError}</Form.Label>
                     <Form.Label for="pass" className="Label">Contraseña</Form.Label>
                     <Form.Control
                         id="pass"
@@ -57,7 +102,7 @@ function SignUp(props) {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-
+                    <Form.Label className="LabelError">{passwordError}</Form.Label>
                     <InputGroup className="ShowPasswordGroup">
                         <Form.Check
                             id="check"
@@ -72,7 +117,7 @@ function SignUp(props) {
             <Modal.Footer>
                 <Button
                     variant="primary"
-                    onClick={props.onHide}
+                    onClick={handleSignUp}
                     className="SignUpButton"
                 >
                     Registrarse
