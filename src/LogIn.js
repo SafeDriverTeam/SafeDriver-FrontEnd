@@ -1,4 +1,3 @@
-import "./css/LogIn.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
@@ -39,14 +38,13 @@ function LogIn(props) {
         }
 
         navigate("/RegisterEmployee");
-        
+
         props.onHide();
     };
 
     return (
         <Modal
             {...props}
-            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
@@ -54,10 +52,10 @@ function LogIn(props) {
                 <Modal.Title id="LogInModal">Inicio de sesión</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className="LogIn">
-                <div>
-                        <Form.Label for="personalEmail">
-                            Correo electrónico
+                <div className="logIn">
+                    <div>
+                        <Form.Label for="personalEmail" className="inputFieldLabel">
+                            Correo electrónico *
                         </Form.Label>
                         <Form.Control
                             id="personalEmail"
@@ -66,14 +64,12 @@ function LogIn(props) {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        <Form.Label className="LabelError">
+                        <Form.Label className="labelError">
                             {emailError}
                         </Form.Label>
                     </div>
                     <div>
-                        <Form.Label for="pass">
-                            Contraseña
-                        </Form.Label>
+                        <Form.Label for="pass" className="inputFieldLabel">Contraseña *</Form.Label>
                         <Form.Control
                             id="pass"
                             type={showPassword ? "text" : "password"}
@@ -81,22 +77,9 @@ function LogIn(props) {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <Form.Label className="LabelError">
+                        <Form.Label className="labelError">
                             {passwordError}
                         </Form.Label>
-                        <InputGroup className="ShowPasswordGroup">
-                            <Form.Check
-                                id="check"
-                                className="ShowPasswordCheck"
-                                value={showPassword}
-                                onChange={() =>
-                                    setShowPassword((prev) => !prev)
-                                }
-                            />
-                            <Form.Label for="check" className="LabelInfo">
-                                Mostrar contraseña
-                            </Form.Label>
-                        </InputGroup>
                     </div>
                 </div>
             </Modal.Body>
@@ -104,7 +87,7 @@ function LogIn(props) {
                 <Button
                     variant="primary"
                     onClick={handleLogIn}
-                    className="LogInButton"
+                    className="logInButton"
                 >
                     Iniciar sesión
                 </Button>{" "}

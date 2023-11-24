@@ -1,16 +1,129 @@
+/*
+    Paleta de colores:
+    #191E34
+    #0D4C57
+    #00797D
+    #41A48E
+    #FFFFD2
+*/
+
 .homeDiv {
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
 .title {
-  display: flex;
-  flex-direction: column;
-  font-size: 64px;
-  font-weight: bolder;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    font-size: 64px;
+    font-weight: bolder;
+    align-items: center;
+    justify-content: center;
+}
+
+.titlePage {
+    display: flex;
+    flex-direction: column;
+    font-size: 45px;
+    font-weight: bolder;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.logIn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.labelInfo {
+    font-size: small;
+}
+
+.labelError {
+    color: red;
+    font-size: small;
+    width: 100%;
+    text-align: end;
+}
+
+.logInButton {
+    width: 100%;
+}
+
+.signUp {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.signUpButton {
+    width: 100%;
+}
+
+.defaultBackground {
+    background-color: lightgray;
+
+}
+
+.registerEmployeeForm {
+    border-top: 5px solid #41A48E;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2%;
+    padding-left: 3%;
+    padding-right: 3%;
+    height: fit-content;
+    width: 500px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.registerEmployeeButton {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.nameSection {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.lastNameSection {
+    flex: 1;
+}
+
+.flexInputField {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.inputField {
+    width: 100%;
+}
+
+.primaryButton {
+    margin-top: 15px;
+    width: 100%;
+}
+
+.inputFieldLabel {
+    font-weight: 500;
 }

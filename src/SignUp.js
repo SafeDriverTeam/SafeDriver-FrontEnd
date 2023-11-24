@@ -1,4 +1,3 @@
-import "./css/SignUp.css";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -58,7 +57,6 @@ function SignUp(props) {
     return (
         <Modal
             {...props}
-            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
@@ -66,26 +64,22 @@ function SignUp(props) {
                 <Modal.Title>Registro de conductor</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className="SignUp">
+                <div className="signUp">
                     <InputGroup>
-                        <div className="NameSection">
-                            <Form.Label for="name">
-                                Nombre
-                            </Form.Label>
+                        <div className="nameSection">
+                            <Form.Label for="name" className="inputFieldLabel">Nombre *</Form.Label>
                             <Form.Control
                                 id="name"
                                 placeholder="Kendrick"
                                 value={userName}
                                 onChange={(e) => setUserName(e.target.value)}
                             />
-                            <Form.Label className="LabelError">
+                            <Form.Label className="labelError">
                                 {userNameError}
                             </Form.Label>
                         </div>
-                        <div className="LastNameSection">
-                            <Form.Label for="name">
-                                Apellido(s)
-                            </Form.Label>
+                        <div className="lastNameSection">
+                            <Form.Label for="name" className="inputFieldLabel">Apellido(s) *</Form.Label>
                             <Form.Control
                                 id="lastName"
                                 placeholder="Lamar"
@@ -94,14 +88,14 @@ function SignUp(props) {
                                     setUserLastName(e.target.value)
                                 }
                             />
-                            <Form.Label className="LabelError">
+                            <Form.Label className="labelError">
                                 {userLastNameError}
                             </Form.Label>
                         </div>
                     </InputGroup>
                     <div>
-                        <Form.Label for="personalEmail">
-                            Correo electrónico
+                        <Form.Label for="personalEmail" className="inputFieldLabel">
+                            Correo electrónico *
                         </Form.Label>
                         <Form.Control
                             id="personalEmail"
@@ -110,14 +104,12 @@ function SignUp(props) {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        <Form.Label className="LabelError">
+                        <Form.Label className="labelError">
                             {emailError}
                         </Form.Label>
                     </div>
                     <div>
-                        <Form.Label for="pass">
-                            Contraseña
-                        </Form.Label>
+                        <Form.Label for="pass" className="inputFieldLabel">Contraseña *</Form.Label>
                         <Form.Control
                             id="pass"
                             type={showPassword ? "text" : "password"}
@@ -125,22 +117,9 @@ function SignUp(props) {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <Form.Label className="LabelError">
+                        <Form.Label className="labelError">
                             {passwordError}
                         </Form.Label>
-                        <InputGroup className="ShowPasswordGroup">
-                            <Form.Check
-                                id="check"
-                                className="ShowPasswordCheck"
-                                value={showPassword}
-                                onChange={() =>
-                                    setShowPassword((prev) => !prev)
-                                }
-                            />
-                            <Form.Label for="check" className="LabelInfo">
-                                Mostrar contraseña
-                            </Form.Label>
-                        </InputGroup>
                     </div>
                 </div>
             </Modal.Body>
@@ -148,7 +127,7 @@ function SignUp(props) {
                 <Button
                     variant="primary"
                     onClick={handleSignUp}
-                    className="SignUpButton"
+                    className="signUpButton"
                 >
                     Registrarse
                 </Button>{" "}
