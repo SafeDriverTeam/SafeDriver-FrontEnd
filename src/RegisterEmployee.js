@@ -17,7 +17,7 @@ function RegisterEmployee() {
     return (
         <div>
             <NavBarAdmin />
-            <div className="registerEmployeeForm">
+            <div className="cardStyle">
                 <h1 className="titlePage">Registro de empleado</h1>
                 <Form.Group>
                     <div className="flexInputField">

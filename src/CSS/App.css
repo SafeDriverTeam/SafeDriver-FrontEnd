@@ -7,21 +7,37 @@
     #FFFFD2
 */
 
-.homeDiv {
-    flex-direction: column;
+.home {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    height: 100vh;
+    align-items: center;
 }
 
-.title {
+.bgImage {
+    width: 100%;
+    height: 100vh;
+    background-image: url("/public/car-insurance.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.5);  
+}
+
+.homeTitle {
     display: flex;
     flex-direction: column;
-    font-size: 64px;
+    font-size: 70px;
     font-weight: bolder;
     align-items: center;
     justify-content: center;
+    text-align: center;
+}
+
+.homeText {
+    font-size: medium;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 80px;
 }
 
 .titlePage {
@@ -78,7 +94,7 @@
 
 }
 
-.registerEmployeeForm {
+.cardStyle {
     border-top: 5px solid #41A48E;
     position: absolute;
     top: 50%;
@@ -88,7 +104,8 @@
     padding-left: 3%;
     padding-right: 3%;
     height: fit-content;
-    width: 500px;
+    min-width: 500px;
+    max-width: 600px;
     border-radius: 5px;
     background-color: white;
 }
@@ -121,6 +138,11 @@
 
 .primaryButton {
     margin-top: 15px;
+    width: 100%;
+}
+
+.secondaryButton {
+    margin-top: 25px;
     width: 100%;
 }
 
