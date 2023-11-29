@@ -21,11 +21,6 @@ function Home() {
                 Registrarse
             </Button>{" "}
             <SignUp show={modalSignUpShow} onHide={() => setModalSignUpShow(false)} />
-
-            <Button variant="tertiary" onClick={() => setModalAdjusterReportShow(true)}>
-                Reportes
-            </Button>{" "}
-            <AdjusterReport show={modalAdjusterReportShow} onHide={() => setModalAdjusterReportShow(false)} />
         </div>
     );
 }

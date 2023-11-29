@@ -25,3 +25,16 @@
   width: 100%;
   text-align: end;
 }
+
+.table-rounded {
+  background-color: wheat;
+  border-radius: 10px;
+  overflow: hidden;
+  border-color: black;
+}
+
+.homeDiv {
+  background-image: url('https://mcintyrelaw.com/wp-content/uploads/2020/10/car-accident-lawsuit.jpg'); 
+  background-size: cover; 
+  background-repeat: no-repeat; 
+}
