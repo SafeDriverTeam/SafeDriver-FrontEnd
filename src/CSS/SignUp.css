@@ -1,0 +1,40 @@
+.SignUp {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.NameSection {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.LastNameSection {
+    flex: 1;
+}
+
+.LabelInfo {
+    font-size: small;
+}
+
+.LabelError {
+    color: red;
+    font-size: small;
+    width: 100%;
+    text-align: end;
+}
+
+.ShowPasswordGroup {
+    justify-content: end;
+}
+
+.ShowPasswordCheck {
+    margin-right: 10px;
+}
+
+.SignUpButton {
+    width: 100%;
+}

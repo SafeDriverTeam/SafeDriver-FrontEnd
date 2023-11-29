@@ -1,0 +1,38 @@
+.RegisterEmployee {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.ShowPasswordCheck {
+    margin-right: 10px;
+}
+
+.RegisterEmployeeForm {
+    border: 5px solid;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2%;
+    padding-left: 3%;
+    padding-right: 3%;
+    height: fit-content;
+    width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #41A48E;
+}
+
+.RegisterEmployeeButton {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.ShowPasswordGroup {
+    justify-content: end;
+}

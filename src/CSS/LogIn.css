@@ -1,0 +1,30 @@
+.LogIn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.LabelInfo {
+    font-size: small;
+}
+
+.LabelError {
+    color: red;
+    font-size: small;
+    text-align: end;
+}
+
+.ShowPasswordGroup {
+    justify-content: end;
+}
+
+.ShowPasswordCheck {
+    margin-right: 10px;
+}
+
+.LogInButton {
+    width: 100%;
+}
