@@ -35,7 +35,7 @@ function ReportList(props) {
     setDictamenText(event.target.value);
   };
 
-  const saveDictamen = async () => {
+  const saveJudgment = async () => {
     const data = {
       reportId: reportId,
       judgment: judgmentText
@@ -50,26 +50,31 @@ function ReportList(props) {
     }
     console.log("Guardando dictamen:", judgmentText);
     setShowDictamenSection(false);
+    setShowDetails(false);
+    fetchReports();
   };
 
   return (
     <div className='container-fluid'>
-      <div className='row'>
-        <div className='col-12 col-lg offset-0 offset-lg-2'>
-          <h2>Lista de reportes</h2>
+      <div className='row mt-3'>
+        <div className='col-md-4 offset-4'>
+          <div className='d-grid mx-auto'>
+            <h2>Lista de reportes</h2>
+          </div>
         </div>
       </div>
       <div className='row mt-3'>
-        <div className='col-12 col-lg offset-0 offset-lg-2'>
-          <div className='table-responsive'>
-            <table className='table table-responsive'>
+        <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
+          <div className='table-responsive card'>
+            <table className='table table-bordered'>
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Fecha</th>
                   <th>Descripción</th>
                   <th>Lugar</th>
+                  <th>Fecha</th>
                   <th>Dictamen</th>
+                  <th>Consultar</th>
                 </tr>
               </thead>
               <tbody>
@@ -98,18 +103,19 @@ function ReportList(props) {
       {showDetails && selectedReport && (
         <div className='row mt-3'>
           <div className='col-12 col-lg offset-0 offset-lg-2'>
-            <h3>Detalles del reporte:</h3>
-            <p>ID: {selectedReport.reportId}</p>
-            <p>Fecha: {new Date(selectedReport.date).toLocaleDateString()}</p>
-            <p>Descripción: {selectedReport.declaration}</p>
-            <p>Lugar: {selectedReport.place}</p>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => setShowDictamenSection(true)}
-            >
-              Dar Dictamen
-            </button>
+            <div className='cardDetailReport'>
+              <h3>Detalles del reporte:</h3>
+              <p>ID: {selectedReport.reportId}</p>
+              <p>Fecha: {new Date(selectedReport.date).toLocaleDateString()}</p>
+              <p>Descripción: {selectedReport.declaration}</p>
+              <p>Lugar: {selectedReport.place}</p>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => setShowDictamenSection(true)}>
+                Dar Dictamen
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -127,7 +133,7 @@ function ReportList(props) {
             <button
               type="button"
               className="btn btn-success mt-2"
-              onClick={saveDictamen}>
+              onClick={saveJudgment}>
               Guardar Dictamen
             </button>
           </div>
