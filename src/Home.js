@@ -2,12 +2,10 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
-import AdjusterReport from "./AdjusterReport";
 
 function Home() {
     const [modalLoginShow, setModalLoginShow] = React.useState(false);
     const [modalSignUpShow, setModalSignUpShow] = React.useState(false);
-    const [modalAdjusterReportShow, setModalAdjusterReportShow] = React.useState(false);
 
     return (
         <div className="homeDiv">

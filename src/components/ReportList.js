@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/App.css';
+import Modal from "react-bootstrap/Modal";
 const API_APP_SERVER_URL = "http://127.0.0.1:3001/";
 
 
@@ -11,6 +12,7 @@ function ReportList(props) {
   const [showDictamenSection, setShowDictamenSection] = useState(false);
   const [judgmentText, setDictamenText] = useState('');
   const [reportId, setReportId] = useState(-1);
+  const [modalDetails, setModalDetails] = React.useState(false);
 
   const fetchReports = async () => {
     try {
@@ -101,24 +103,27 @@ function ReportList(props) {
       </div>
 
       {showDetails && selectedReport && (
-        <div className='row mt-3'>
-          <div className='col-12 col-lg offset-0 offset-lg-2'>
-            <div className='cardDetailReport'>
-              <h3>Detalles del reporte:</h3>
-              <p>ID: {selectedReport.reportId}</p>
-              <p>Fecha: {new Date(selectedReport.date).toLocaleDateString()}</p>
-              <p>Descripción: {selectedReport.declaration}</p>
-              <p>Lugar: {selectedReport.place}</p>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setShowDictamenSection(true)}>
-                Dar Dictamen
-              </button>
+        <Modal>
+          <div className='row mt-3'>
+            <div className='col-12 col-lg offset-0 offset-lg-2'>
+              <div className='cardDetailReport'>
+                <h3>Detalles del reporte:</h3>
+                <p>ID: {selectedReport.reportId}</p>
+                <p>Fecha: {new Date(selectedReport.date).toLocaleDateString()}</p>
+                <p>Descripción: {selectedReport.declaration}</p>
+                <p>Lugar: {selectedReport.place}</p>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => setShowDictamenSection(true)}>
+                  Dar Dictamen
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </Modal>
       )}
+
 
       {showDictamenSection && (
         <div className='row mt-3'>
