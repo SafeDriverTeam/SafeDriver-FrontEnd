@@ -1,7 +1,12 @@
-import { Button, Form, InputGroup } from "react-bootstrap";
+import Alert from 'react-bootstrap/Alert';
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import "./css/App.css";
 import React, { useState } from "react";
 import NavBarAdmin from "./components/NavBarAdmin";
+import axios from "./api/axios";
+const AUTH_URL = "auth/";
 
 function RegisterEmployee() {
     const [userName, setUserName] = useState("");
@@ -12,11 +17,94 @@ function RegisterEmployee() {
     const [emailError, setEmailError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [type, setType] = useState("adjuster");
+    const [typeError, setTypeError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [visibleAlert, setVisibleAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+    const [variant, setVariant] = useState("");
+
+    function validateInputs() {
+        setUserNameError("");
+        setUserLastNameError("");
+        setTypeError("");
+        setEmailError("");
+        setPasswordError("");
+        let isValid = true;
+
+        if (userName === "") {
+            setUserNameError("El nombre es requerido");
+            isValid = false;
+
+        } else if (userLastName === "") {
+            setUserLastNameError("El apellido es requerido");
+            isValid = false;
+
+        } else if (type === "") {
+            setTypeError("El tipo de usuario es requerido");
+            isValid = false;
+
+        } else if (email === "") {
+            setEmailError("El correo electrónico es requerido");
+            isValid = false;
+
+        } else if (password === "") {
+            setPasswordError("La contraseña es requerida");
+            isValid = false;
+
+        } else if (password.length < 8) {
+            setPasswordError("La contraseña debe tener al menos 8 caracteres");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    const handleRegisterEmployee = async () => {
+        if (validateInputs()) {
+            await axios.post(AUTH_URL + "signup", { 
+                name: userName, 
+                surnames: userLastName, 
+                email, 
+                password, 
+                type
+            })
+            .then(function (response) {
+                setUserName("");
+                setUserLastName("");
+                setType("adjuster");
+                setEmail("");
+                setPassword("");
+
+                setVariant("success");
+                setAlertMessage("¡Empleado registrado exitosamente!");                
+                setVisibleAlert(true);
+                setTimeout(() => {
+                    setVisibleAlert(false);
+                }, 5000);
+            })
+            .catch(function (error) {
+                if(error.response.status === 409) {
+                    setVariant("danger");
+                    setAlertMessage("El correo electrónico ya está ocupado");
+                } else {
+                    setVariant("danger");
+                    setAlertMessage("Ha ocurrido un error, inténtelo de nuevo más tarde");
+                }
+                setVisibleAlert(true);
+                setTimeout(() => {
+                    setVisibleAlert(false);
+                }, 5000);
+            });
+        }
+    };
 
     return (
         <div>
             <NavBarAdmin />
+            <Alert show={visibleAlert} variant={variant}>
+                {alertMessage}
+            </Alert>
             <div className="cardStyle">
                 <h1 className="titlePage">Registro de empleado</h1>
                 <Form.Group>
@@ -47,6 +135,16 @@ function RegisterEmployee() {
                                 {userLastNameError}
                             </Form.Label>
                         </div>
+                    </div>
+                    <div className="inputField">
+                        <Form.Label for="type" className="inputFieldLabel">Tipo de usuario: *</Form.Label>
+                        <Form.Select id="type" value={type} onChange={(e) => setType(e.target.value)}>
+                            <option value="adjuster">Ajustador</option>
+                            <option value="executive">Ejecutivo</option>
+                        </Form.Select>
+                        <Form.Label className="labelError">
+                            {typeError}
+                        </Form.Label>
                     </div>
                     <div className="inputField">
                         <Form.Label for="empresarialEmail" className="inputFieldLabel">
@@ -80,7 +178,10 @@ function RegisterEmployee() {
                             {passwordError}
                         </Form.Label>
                     </div>
-                    <Button variant="primary" className="primaryButton">
+                    <Button 
+                        variant="primary" 
+                        onClick={handleRegisterEmployee}
+                        className="primaryButton">
                         Registrar empleado
                     </Button>{" "}
                 </Form.Group>
