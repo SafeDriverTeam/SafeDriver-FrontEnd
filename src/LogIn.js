@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 
 function LogIn(props) {
     const navigate = useNavigate();
@@ -37,7 +36,7 @@ function LogIn(props) {
             return;
         }
 
-        navigate("/RegisterEmployee");
+        navigate("/registerEmployee");
 
         props.onHide();
     };
