@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import axios from "./api/axios";
+const AUTH_URL = "auth/";
 
 function LogIn(props) {
     const navigate = useNavigate();
@@ -12,33 +14,60 @@ function LogIn(props) {
     const [passwordError, setPasswordError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleLogIn = () => {
+    function validateInputs() {
         setEmailError("");
         setPasswordError("");
+        let isValid = true;
 
         if (email === "") {
             setEmailError("El correo electrónico es requerido");
-            return;
-        }
+            isValid = false;
 
-        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
             setEmailError("El correo electrónico no es válido");
-            return;
-        }
+            isValid = false;
 
-        if (password === "") {
+        } else if (password === "") {
             setPasswordError("La contraseña es requerida");
-            return;
-        }
+            isValid = false;
 
-        if (password.length < 8) {
+        } else if (password.length < 8) {
             setPasswordError("La contraseña debe tener al menos 8 caracteres");
-            return;
+            isValid = false;
         }
 
-        navigate("/registerEmployee");
+        return isValid;
+    }
 
-        props.onHide();
+    const handleLogIn = async () => {
+        if (validateInputs()) {
+            await axios.post(AUTH_URL + "login", { 
+                email, 
+                password 
+            })
+            .then(function (response) {
+                const user = response.data.user;
+                    
+                if(user.type === "driver") {
+                    navigate("/");
+                } else if(user.type === "adjuster") {
+                    navigate("/");
+                } else if(user.type === "executive") {
+                    navigate("/");
+                } else if(user.type === "admin") {
+                    navigate("/registerEmployee");
+                }
+                
+                props.onHide();
+            })
+            .catch(function (error) {
+                if(error.response.status === 401) {
+                    setPasswordError("El correo electrónico o la contraseña son incorrectos");
+                } else {
+                    setPasswordError("Ha ocurrido un error, inténtelo de nuevo más tarde");
+                }
+            });
+        }
     };
 
     return (
