@@ -10,9 +10,9 @@ function ReportList(props) {
   const [selectedReport, setSelectedReport] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
   const [showDictamenSection, setShowDictamenSection] = useState(false);
-  const [judgmentText, setDictamenText] = useState('');
+  const [judgmentText, setJudgmentText] = useState('');
   const [reportId, setReportId] = useState(-1);
-  const [modalDetails, setModalDetails] = React.useState(false);
+  const [modalDetails, setShowModalDetails] = React.useState(false);
 
   const fetchReports = async () => {
     try {
@@ -27,14 +27,16 @@ function ReportList(props) {
     fetchReports();
   }, []);
 
-  const showReportDetails = (report) => {
+  const showReportDetails = (report, show) => {
+    setShowModalDetails(show);
     setSelectedReport(report);
-    setShowDetails(true);
+    setShowDetails(show);
     setReportId(report.reportId);
+    setShowDictamenSection(false);
   };
   
   const handleDictamenChange = (event) => {
-    setDictamenText(event.target.value);
+    setJudgmentText(event.target.value);
   };
 
   const saveJudgment = async () => {
@@ -46,7 +48,8 @@ function ReportList(props) {
     try {
       const response = await axios.put(API_APP_SERVER_URL + 'report/updateReportJudgment', data);
       console.log("Dictamen guardado exitosamente:", response.data);
-      setShowDictamenSection(false);
+      setShowModalDetails(false);
+      setJudgmentText('');
     } catch (error) {
       console.error('Hubo un problema con la solicitud:', error);
     }
@@ -60,7 +63,7 @@ function ReportList(props) {
     <div className='container-fluid'>
       <div className='row mt-3'>
         <div className='col-md-4 offset-4'>
-          <div className='d-grid mx-auto'>
+          <div className='c-grid mx-auto'>
             <h2>Lista de reportes</h2>
           </div>
         </div>
@@ -91,7 +94,7 @@ function ReportList(props) {
                       <button
                         type="button"
                         className="btn btn-primary"
-                        onClick={() => showReportDetails(report)}>Ver
+                        onClick={() => showReportDetails(report, true)}>Ver
                       </button>
                     </td>
                   </tr>
@@ -102,48 +105,62 @@ function ReportList(props) {
         </div>
       </div>
 
-      {showDetails && selectedReport && (
-        <Modal>
-          <div className='row mt-3'>
-            <div className='col-12 col-lg offset-0 offset-lg-2'>
-              <div className='cardDetailReport'>
-                <h3>Detalles del reporte:</h3>
-                <p>ID: {selectedReport.reportId}</p>
-                <p>Fecha: {new Date(selectedReport.date).toLocaleDateString()}</p>
-                <p>Descripción: {selectedReport.declaration}</p>
-                <p>Lugar: {selectedReport.place}</p>
+      <Modal backdrop="static"
+       show={modalDetails} onHide={() => setShowModalDetails(false) }
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Detalles del reporte</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          { showDetails && selectedReport && (
+            <div className='row mt-3'>
+              <div className='col-12 col-lg offset-0 offset-lg-0'>
+                  <p>ID: {selectedReport.reportId}</p>
+                  <p>Fecha: {new Date(selectedReport.date).toLocaleDateString()}</p>
+                  <p>Descripción: {selectedReport.declaration}</p>
+                  <p>Lugar: {selectedReport.place}</p>
+                  <div >
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => setShowModalDetails(false)}>
+                    Cancelar
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => setShowDictamenSection(true)}>
+                    Dar Dictamen
+                  </button>
+                  </div>
+              </div>
+            </div>
+          )}
+
+          {showDictamenSection && (
+            <div className='row mt-3'>
+              <div className='col-12 col-lg offset-0 offset-lg-0'>
+                <h3>Escribir dictamen:</h3>
+                <textarea
+                  value={judgmentText}
+                  onChange={handleDictamenChange}
+                  className="form-control"
+                  rows="4"
+                  placeholder="Ingrese el dictamen para el reporte"></textarea>
                 <button
                   type="button"
-                  className="btn btn-primary"
-                  onClick={() => setShowDictamenSection(true)}>
-                  Dar Dictamen
+                  className="btn btn-success mt-2"
+                  onClick={saveJudgment}>
+                  Guardar Dictamen
                 </button>
               </div>
             </div>
-          </div>
-        </Modal>
-      )}
-
-
-      {showDictamenSection && (
-        <div className='row mt-3'>
-          <div className='col-12 col-lg offset-0 offset-lg-2'>
-            <h3>Escribir dictamen:</h3>
-            <textarea
-              value={judgmentText}
-              onChange={handleDictamenChange}
-              className="form-control"
-              rows="4"
-              placeholder="Ingrese el dictamen para el reporte"></textarea>
-            <button
-              type="button"
-              className="btn btn-success mt-2"
-              onClick={saveJudgment}>
-              Guardar Dictamen
-            </button>
-          </div>
-        </div>
-      )}
+          )}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
