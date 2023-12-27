@@ -1,5 +1,5 @@
 import { Button, Form, InputGroup } from "react-bootstrap";
-import "./css/App.css";
+import "./CSS/App.css";
 import React, { useState } from "react";
 import NavBarAdmin from "./components/NavBarAdmin";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/App.css";
+import "../CSS/App.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -24,7 +24,9 @@ const NavBarAdmin = () => {
                         <Nav.Link href="/registerEmployee">
                             Registrar empleado
                         </Nav.Link>
+                        
                     </Nav>
+                    <Nav.Link href="/BuyPolicy">Gestión de Usuarios</Nav.Link>
                 </Navbar.Collapse>
                 <Nav pullRight>
                     <Nav.Link href="/">Salir</Nav.Link>
