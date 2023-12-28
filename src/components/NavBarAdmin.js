@@ -26,7 +26,8 @@ const NavBarAdmin = () => {
                         </Nav.Link>
                         
                     </Nav>
-                    <Nav.Link href="/BuyPolicy">Gestión de Usuarios</Nav.Link>
+                    <Nav.Link href="/BuyPolicy">Comprar poliza</Nav.Link>
+                    <Nav.Link href="/AssignAdjuster">AsignacionSiniestros</Nav.Link>
                 </Navbar.Collapse>
                 <Nav pullRight>
                     <Nav.Link href="/">Salir</Nav.Link>
