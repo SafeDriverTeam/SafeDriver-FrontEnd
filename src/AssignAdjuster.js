@@ -31,6 +31,7 @@ function AssignAdjuster() {
         
         <Container fluid>
             <NavBarAdmin />
+            <br></br><h2>Asignación de ajustador a siniestro</h2> <br></br>
             <Table striped bordered hover>
                 <thead>
                     <tr>
