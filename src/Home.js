@@ -8,17 +8,43 @@ function Home() {
     const [modalSignUpShow, setModalSignUpShow] = React.useState(false);
 
     return (
-        <div className="homeDiv">
-            <h1 className="title">Welcome!</h1>
-            <Button variant="primary" onClick={() => setModalLoginShow(true)} >
-                Iniciar sesión
-            </Button>{" "}
-            <LogIn show={modalLoginShow} onHide={() => setModalLoginShow(false)} />
-
-            <Button variant="secondary" onClick={() => setModalSignUpShow(true)}>
-                Registrarse
-            </Button>{" "}
-            <SignUp show={modalSignUpShow} onHide={() => setModalSignUpShow(false)} />
+        <div>
+            <div className="bgImage"></div>
+            <div className="home">
+                <div className="cardStyle">
+                    <h1 className="homeTitle">Bienvenido</h1>
+                    <h2 className="titlePage">a SafeDriver</h2>
+                    <p className="homeText">
+                        Te acompañamos en tu día a día para que vivas tranquilo,
+                        protegiéndote a ti, tu auto y a los que más quieres.
+                    </p>
+                    <div>
+                        <Button
+                            variant="primary"
+                            className="primaryButton"
+                            onClick={() => setModalLoginShow(true)}
+                        >
+                            Iniciar sesión
+                        </Button>{" "}
+                        <LogIn
+                            show={modalLoginShow}
+                            onHide={() => setModalLoginShow(false)}
+                        />
+                        <hr></hr>
+                        <Button
+                            variant="secondary"
+                            className="primaryButton"
+                            onClick={() => setModalSignUpShow(true)}
+                        >
+                            Registrarse
+                        </Button>{" "}
+                        <SignUp
+                            show={modalSignUpShow}
+                            onHide={() => setModalSignUpShow(false)}
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

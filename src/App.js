@@ -6,8 +6,8 @@ import AdjusterReport from "./AdjusterReport";
 
 function App() {
     return (
-        <div className="App">
-            {/*<BrowserRouter>
+        <div>
+            <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/registerEmployee" element={<RegisterEmployee />} />

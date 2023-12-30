@@ -1,96 +1,151 @@
-.homeDiv {
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+/*
+    Paleta de colores:
+    #191E34
+    #0D4C57
+    #00797D
+    #41A48E
+    #FFFFD2
+*/
+
+.home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.title {
-  display: flex;
-  flex-direction: column;
-  font-size: 64px;
-  font-weight: bolder;
-  align-items: center;
-  justify-content: center;
+.bgImage {
+    width: 100%;
+    height: 100vh;
+    background-image: url("/public/car-insurance.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.5);  
 }
 
-.LabelInfo {
-  font-size: small;
+.homeTitle {
+    display: flex;
+    flex-direction: column;
+    font-size: 70px;
+    font-weight: bolder;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
-.LabelError {
-  color: red;
-  font-size: small;
-  width: 100%;
-  text-align: end;
+.homeText {
+    font-size: medium;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 80px;
 }
 
-.table-rounded {
-  background-color: wheat;
-  border-radius: 10px;
-  overflow: hidden;
-  border-color: black;
+.titlePage {
+    display: flex;
+    flex-direction: column;
+    font-size: 45px;
+    font-weight: bolder;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    text-align: center;
 }
 
-.homeDiv {
-  background-image: url('https://mcintyrelaw.com/wp-content/uploads/2020/10/car-accident-lawsuit.jpg'); 
-  background-size: cover; 
-  background-repeat: no-repeat; 
+.logIn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
-
-.card {
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: max;
-  background: linear-gradient(
-  50deg,
-  rgba(255, 255, 255, 0.4) 12%,
-  rgba(255, 255, 255, 0.1) 77%
-  );
-  background-blend-mode: overlay;
-  box-shadow: 0px 4px 24px 1px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+.labelInfo {
+    font-size: small;
 }
 
-
-.card {
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: max;
-  background: linear-gradient(
-  50deg,
-  rgba(255, 255, 255, 0.4) 12%,
-  rgba(255, 255, 255, 0.1) 77%
-  );
-  background-blend-mode: overlay;
-  box-shadow: 0px 4px 24px 1px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+.labelError {
+    color: red;
+    font-size: small;
+    width: 100%;
+    text-align: end;
 }
 
-.cardDetailReport {
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: max-content;
-  background: linear-gradient(
-  50deg,
-  rgba(255, 255, 255, 0.4) 12%,
-  rgba(255, 255, 255, 0.1) 77%
-  );
-  background-blend-mode: overlay;
-  box-shadow: 0px 4px 24px 1px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+.logInButton {
+    width: 100%;
+}
+
+.signUp {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.signUpButton {
+    width: 100%;
+}
+
+.defaultBackground {
+    background-color: lightgray;
+
+}
+
+.cardStyle {
+    border-top: 5px solid #41A48E;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2%;
+    padding-left: 3%;
+    padding-right: 3%;
+    height: fit-content;
+    min-width: 500px;
+    max-width: 600px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.registerEmployeeButton {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.nameSection {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.lastNameSection {
+    flex: 1;
+}
+
+.flexInputField {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.inputField {
+    width: 100%;
+}
+
+.primaryButton {
+    margin-top: 15px;
+    width: 100%;
+}
+
+.secondaryButton {
+    margin-top: 25px;
+    width: 100%;
+}
+
+.inputFieldLabel {
+    font-weight: 500;
 }

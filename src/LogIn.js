@@ -1,10 +1,10 @@
-import "./css/LogIn.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
+import axios from "./api/axios";
+const AUTH_URL = "auth/";
 
 function LogIn(props) {
     const navigate = useNavigate();
@@ -14,39 +14,65 @@ function LogIn(props) {
     const [passwordError, setPasswordError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleLogIn = () => {
+    function validateInputs() {
         setEmailError("");
         setPasswordError("");
+        let isValid = true;
 
         if (email === "") {
             setEmailError("El correo electrónico es requerido");
-            return;
-        }
+            isValid = false;
 
-        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
             setEmailError("El correo electrónico no es válido");
-            return;
-        }
+            isValid = false;
 
-        if (password === "") {
+        } else if (password === "") {
             setPasswordError("La contraseña es requerida");
-            return;
-        }
+            isValid = false;
 
-        if (password.length < 8) {
+        } else if (password.length < 8) {
             setPasswordError("La contraseña debe tener al menos 8 caracteres");
-            return;
+            isValid = false;
         }
 
-        navigate("/RegisterEmployee");
-        
-        props.onHide();
+        return isValid;
+    }
+
+    const handleLogIn = async () => {
+        if (validateInputs()) {
+            await axios.post(AUTH_URL + "login", { 
+                email, 
+                password 
+            })
+            .then(function (response) {
+                const user = response.data.user;
+                    
+                if(user.type === "driver") {
+                    navigate("/");
+                } else if(user.type === "adjuster") {
+                    navigate("/");
+                } else if(user.type === "executive") {
+                    navigate("/");
+                } else if(user.type === "admin") {
+                    navigate("/registerEmployee");
+                }
+                
+                props.onHide();
+            })
+            .catch(function (error) {
+                if(error.response.status === 401) {
+                    setPasswordError("El correo electrónico o la contraseña son incorrectos");
+                } else {
+                    setPasswordError("Ha ocurrido un error, inténtelo de nuevo más tarde");
+                }
+            });
+        }
     };
 
     return (
         <Modal
             {...props}
-            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
@@ -54,10 +80,10 @@ function LogIn(props) {
                 <Modal.Title id="LogInModal">Inicio de sesión</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className="LogIn">
-                <div>
-                        <Form.Label for="personalEmail">
-                            Correo electrónico
+                <div className="logIn">
+                    <div>
+                        <Form.Label for="personalEmail" className="inputFieldLabel">
+                            Correo electrónico *
                         </Form.Label>
                         <Form.Control
                             id="personalEmail"
@@ -66,14 +92,12 @@ function LogIn(props) {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        <Form.Label className="LabelError">
+                        <Form.Label className="labelError">
                             {emailError}
                         </Form.Label>
                     </div>
                     <div>
-                        <Form.Label for="pass">
-                            Contraseña
-                        </Form.Label>
+                        <Form.Label for="pass" className="inputFieldLabel">Contraseña *</Form.Label>
                         <Form.Control
                             id="pass"
                             type={showPassword ? "text" : "password"}
@@ -81,22 +105,9 @@ function LogIn(props) {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <Form.Label className="LabelError">
+                        <Form.Label className="labelError">
                             {passwordError}
                         </Form.Label>
-                        <InputGroup className="ShowPasswordGroup">
-                            <Form.Check
-                                id="check"
-                                className="ShowPasswordCheck"
-                                value={showPassword}
-                                onChange={() =>
-                                    setShowPassword((prev) => !prev)
-                                }
-                            />
-                            <Form.Label for="check" className="LabelInfo">
-                                Mostrar contraseña
-                            </Form.Label>
-                        </InputGroup>
                     </div>
                 </div>
             </Modal.Body>
@@ -104,7 +115,7 @@ function LogIn(props) {
                 <Button
                     variant="primary"
                     onClick={handleLogIn}
-                    className="LogInButton"
+                    className="logInButton"
                 >
                     Iniciar sesión
                 </Button>{" "}

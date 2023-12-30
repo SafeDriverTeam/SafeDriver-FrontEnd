@@ -1,11 +1,14 @@
-import "./css/SignUp.css";
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import axios from "./api/axios";
+const AUTH_URL = "auth/";
 
 function SignUp(props) {
+    const navigate = useNavigate();
     const [userName, setUserName] = useState("");
     const [userNameError, setUserNameError] = useState("");
     const [userLastName, setUserLastName] = useState("");
@@ -16,49 +19,67 @@ function SignUp(props) {
     const [passwordError, setPasswordError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleSignUp = () => {
+    function validateInputs() {
         setUserNameError("");
         setUserLastNameError("");
         setEmailError("");
         setPasswordError("");
+        let isValid = true;
 
         if (userName === "") {
             setUserNameError("El nombre es requerido");
-            return;
-        }
+            isValid = false;
 
-        if (userLastName === "") {
+        } else if (userLastName === "") {
             setUserLastNameError("El apellido es requerido");
-            return;
-        }
+            isValid = false;
 
-        if (email === "") {
+        } else if (email === "") {
             setEmailError("El correo electrónico es requerido");
-            return;
-        }
+            isValid = false;
 
-        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
             setEmailError("El correo electrónico no es válido");
-            return;
-        }
+            isValid = false;
 
-        if (password === "") {
+        } else if (password === "") {
             setPasswordError("La contraseña es requerida");
-            return;
-        }
+            isValid = false;
 
-        if (password.length < 8) {
+        } else if (password.length < 8) {
             setPasswordError("La contraseña debe tener al menos 8 caracteres");
-            return;
+            isValid = false;
         }
 
-        props.onHide();
+        return isValid;
+    }
+
+    const handleSignUp = async () => {
+        if (validateInputs()) {
+            await axios.post(AUTH_URL + "signup", { 
+                name: userName, 
+                surnames: userLastName, 
+                email, 
+                password, 
+                type: "driver"
+            })
+            .then(function (response) {
+                
+                navigate("/");
+            })
+            .catch(function (error) {
+                if(error.response.status === 409) {
+                    setPasswordError("El correo electrónico ya está registrado");
+                } else {
+                    setPasswordError("Ha ocurrido un error, inténtelo de nuevo más tarde");
+                }
+            });
+        }
     };
 
     return (
         <Modal
             {...props}
-            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
@@ -66,26 +87,22 @@ function SignUp(props) {
                 <Modal.Title>Registro de conductor</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className="SignUp">
+                <div className="signUp">
                     <InputGroup>
-                        <div className="NameSection">
-                            <Form.Label for="name">
-                                Nombre
-                            </Form.Label>
+                        <div className="nameSection">
+                            <Form.Label for="name" className="inputFieldLabel">Nombre *</Form.Label>
                             <Form.Control
                                 id="name"
                                 placeholder="Kendrick"
                                 value={userName}
                                 onChange={(e) => setUserName(e.target.value)}
                             />
-                            <Form.Label className="LabelError">
+                            <Form.Label className="labelError">
                                 {userNameError}
                             </Form.Label>
                         </div>
-                        <div className="LastNameSection">
-                            <Form.Label for="name">
-                                Apellido(s)
-                            </Form.Label>
+                        <div className="lastNameSection">
+                            <Form.Label for="name" className="inputFieldLabel">Apellido(s) *</Form.Label>
                             <Form.Control
                                 id="lastName"
                                 placeholder="Lamar"
@@ -94,14 +111,14 @@ function SignUp(props) {
                                     setUserLastName(e.target.value)
                                 }
                             />
-                            <Form.Label className="LabelError">
+                            <Form.Label className="labelError">
                                 {userLastNameError}
                             </Form.Label>
                         </div>
                     </InputGroup>
                     <div>
-                        <Form.Label for="personalEmail">
-                            Correo electrónico
+                        <Form.Label for="personalEmail" className="inputFieldLabel">
+                            Correo electrónico *
                         </Form.Label>
                         <Form.Control
                             id="personalEmail"
@@ -110,14 +127,12 @@ function SignUp(props) {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        <Form.Label className="LabelError">
+                        <Form.Label className="labelError">
                             {emailError}
                         </Form.Label>
                     </div>
                     <div>
-                        <Form.Label for="pass">
-                            Contraseña
-                        </Form.Label>
+                        <Form.Label for="pass" className="inputFieldLabel">Contraseña *</Form.Label>
                         <Form.Control
                             id="pass"
                             type={showPassword ? "text" : "password"}
@@ -125,22 +140,9 @@ function SignUp(props) {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <Form.Label className="LabelError">
+                        <Form.Label className="labelError">
                             {passwordError}
                         </Form.Label>
-                        <InputGroup className="ShowPasswordGroup">
-                            <Form.Check
-                                id="check"
-                                className="ShowPasswordCheck"
-                                value={showPassword}
-                                onChange={() =>
-                                    setShowPassword((prev) => !prev)
-                                }
-                            />
-                            <Form.Label for="check" className="LabelInfo">
-                                Mostrar contraseña
-                            </Form.Label>
-                        </InputGroup>
                     </div>
                 </div>
             </Modal.Body>
@@ -148,7 +150,7 @@ function SignUp(props) {
                 <Button
                     variant="primary"
                     onClick={handleSignUp}
-                    className="SignUpButton"
+                    className="signUpButton"
                 >
                     Registrarse
                 </Button>{" "}
