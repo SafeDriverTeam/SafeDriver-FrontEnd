@@ -4,8 +4,8 @@ import "./css/AppReport.css";
 import "./css/App.css";
 import NavBarAdmin from "./components/NavBarDriver";
 import Table from 'react-bootstrap/Table';
-import { Alert } from 'bootstrap';
 import AWS from 'aws-sdk';
+import { useNavigate } from 'react-router-dom';
 
 AWS.config.update({
   accessKeyId: 'AKIA5TD46D54C2F6DLMX',
@@ -28,6 +28,7 @@ const GeoLocationComponent = () => {
   const [incidentType, setIncidentType] = useState('');
   const incidentOptions = ['','Daño a terceros','Daños físicos a terceros','Asistencia legal','Servicios médicos','Robo total de auto','Auxilio vial','Daño a auto personal'];
   const [declaration, setDeclaration] = useState('');
+  const navigate = useNavigate();
 
   
   useEffect(()=>{
@@ -37,7 +38,7 @@ const GeoLocationComponent = () => {
     .then(data => setCarsData(data))
     .catch(error => console.error('Error al recuperar los vehículos:',error));
     }catch(error){
-      Alert('Error al recuperar los vehículos, favor de intentar más tarde.');
+      alert('Error al recuperar los vehículos, favor de intentar más tarde.');
     }
   }, []);
 
@@ -112,12 +113,43 @@ useEffect(() => {
 
 
   const handleRegisterInvolved = (names) => {
-    setInvolvedNames([...involvedNames, names]);
+    const validNameRegex = /^[A-Za-z\s]+$/;
+    if(names === '' || names.length > 40 || !validNameRegex.test(names)){
+      alert('Ingresa un nombre válido con letras (sin acentos) y espacios que no supere los 40 caracteres.');
+      return;
+    }else{
+      setInvolvedNames([...involvedNames, names]);
+    }
   };
 
   const handleRegisterCarDetails = (details) => {
-    setCarDetails([...carDetails, details]);
+    
+    if(validateData(details)){
+      setCarDetails([...carDetails, details]);
+    }
+    
   };
+  const validateData= (details) =>{
+    const validNameRegex = /^[A-Za-z\s]+$/;
+    let result = true;
+    if(details.marca === '' || details.marca.length > 20 || !validNameRegex.test(details.marca)){
+      alert('Ingresa una marca válida con letras (sin acentos) y espacios que no supere los 20 caracteres.');
+      result = false;
+    }
+    if(details.modelo === '' || details.modelo.length > 20 || !validNameRegex.test(details.modelo)){
+      alert('Ingresa un modelo válido con letras (sin acentos) y espacios que no supere los 20 caracteres.');
+      result = false;
+    }
+    if(details.color === '' || details.color.length > 20 || !validNameRegex.test(details.color)){
+      alert('Ingresa un color válido con letras (sin acentos) y espacios que no supere los 20 caracteres.');
+      result = false;
+    }
+    if(details.matricula === '' || details.matricula.length > 9 ){
+      alert('Ingresa una matrícula válida que no supere los 9 caracteres.');
+      result = false;
+    }
+    return result;
+  }
 
   const handleImageUpload = (event) => {
     const uploadedImages = Array.from(event.target.files);
@@ -173,8 +205,8 @@ useEffect(() => {
     if(validateIncidentType() === false){
       result = false;
     }
-    if(declaration === ''){
-      alert('Ingresa una declaración.');
+    if(declaration === '' || declaration.length > 500){
+      alert('Ingresa una declaración que no supere los 500 caracteres.');
       result = false;
     }
     if(involvedNames.length === 0){
@@ -250,7 +282,7 @@ useEffect(() => {
       });
       if (response.ok) {
         const responseData = await response.json();
-
+        let result = true;
         // Realizar el segundo llamado a la API para insertar los nombres de archivo y el ID del reporte
         for (const fileNamePromise of uploadPromises) {
           const fileName = await fileNamePromise;
@@ -266,12 +298,18 @@ useEffect(() => {
             },
             body: JSON.stringify(imageReportBody),
           });
-
-          if (imageReportResponse.ok) {
-            Alert('Reporte registrado correctamente.');
+          if (imageReportResponse.ok && result === true) {
+            console.log('Imagen registrada');
           } else {
-            Alert('Error al registrar el reporte, favor de intentar más tarde.');
+            result=false;
+            alert('Error al registrar la imagen, favor de intentar más tarde.');
           }
+        }
+        if(result === true){
+          alert('Reporte registrado correctamente.');
+          navigate(-1);
+        }else{
+          alert('Error al registrar el reporte, favor de intentar más tarde.');
         }
       } else {
         console.error('Error al crear el reporte:', response.status, response.statusText);
@@ -283,6 +321,21 @@ useEffect(() => {
     }
   }
 };
+
+
+  const handleDeleteInvolved = (index) => {
+   const updatedNames = [...involvedNames];
+   updatedNames.splice(index, 1);
+   setInvolvedNames(updatedNames);
+  };
+
+  const handleDeleteCarDetails = (index) => {
+   const updatedDetails = [...carDetails];
+   updatedDetails.splice(index, 1);
+   setCarDetails(updatedDetails);
+  };
+
+
 
   return (
     <div>
@@ -367,14 +420,18 @@ useEffect(() => {
       {/* Tabla para mostrar los nombres de involucrados */}
       <Table striped bordered hover>
         <thead>
-          <tr>
+          <tr >
             <th>Nombres Involucrados</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody>
           {involvedNames.map((names, index) => (
             <tr key={index}>
               <td>{names}</td>
+              <td>
+                <button onClick={() => handleDeleteInvolved(index)}>Eliminar</button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -411,6 +468,7 @@ useEffect(() => {
             <th>Modelo</th>
             <th>Matrícula</th>
             <th>Color</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody>
@@ -420,6 +478,9 @@ useEffect(() => {
               <td>{details.modelo}</td>
               <td>{details.matricula}</td>
               <td>{details.color}</td>
+              <td>
+                <button onClick={() => handleDeleteCarDetails(index)}>Eliminar</button>
+              </td>
             </tr>
           ))}
         </tbody>
