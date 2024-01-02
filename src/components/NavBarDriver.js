@@ -36,10 +36,10 @@ const NavBarDriver = () => {
                             title="Reporte de siniestro"
                             id="basic-nav-dropdown"
                         >
-                            <NavDropdown.Item href="/">
+                            <NavDropdown.Item href="/RegisterReport">
                                 Levantar reporte
                             </NavDropdown.Item>
-                            <NavDropdown.Item href="/">
+                            <NavDropdown.Item href="/HistoryReports">
                                 Historial de reportes
                             </NavDropdown.Item>
                         </NavDropdown>
