@@ -1,10 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import axios from "./api/axios";
+const AUTH_URL = "auth/";
 
 function SignUp(props) {
+    const navigate = useNavigate();
     const [userName, setUserName] = useState("");
     const [userNameError, setUserNameError] = useState("");
     const [userLastName, setUserLastName] = useState("");
@@ -15,43 +19,62 @@ function SignUp(props) {
     const [passwordError, setPasswordError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleSignUp = () => {
+    function validateInputs() {
         setUserNameError("");
         setUserLastNameError("");
         setEmailError("");
         setPasswordError("");
+        let isValid = true;
 
         if (userName === "") {
             setUserNameError("El nombre es requerido");
-            return;
-        }
+            isValid = false;
 
-        if (userLastName === "") {
+        } else if (userLastName === "") {
             setUserLastNameError("El apellido es requerido");
-            return;
-        }
+            isValid = false;
 
-        if (email === "") {
+        } else if (email === "") {
             setEmailError("El correo electrónico es requerido");
-            return;
-        }
+            isValid = false;
 
-        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
             setEmailError("El correo electrónico no es válido");
-            return;
-        }
+            isValid = false;
 
-        if (password === "") {
+        } else if (password === "") {
             setPasswordError("La contraseña es requerida");
-            return;
-        }
+            isValid = false;
 
-        if (password.length < 8) {
+        } else if (password.length < 8) {
             setPasswordError("La contraseña debe tener al menos 8 caracteres");
-            return;
+            isValid = false;
         }
 
-        props.onHide();
+        return isValid;
+    }
+
+    const handleSignUp = async () => {
+        if (validateInputs()) {
+            await axios.post(AUTH_URL + "signup", { 
+                name: userName, 
+                surnames: userLastName, 
+                email, 
+                password, 
+                type: "driver"
+            })
+            .then(function (response) {
+                
+                navigate("/");
+            })
+            .catch(function (error) {
+                if(error.response.status === 409) {
+                    setPasswordError("El correo electrónico ya está registrado");
+                } else {
+                    setPasswordError("Ha ocurrido un error, inténtelo de nuevo más tarde");
+                }
+            });
+        }
     };
 
     return (
