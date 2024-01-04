@@ -60,8 +60,7 @@ function SignUp(props) {
                 name: userName, 
                 surnames: userLastName, 
                 email, 
-                password, 
-                type: "driver"
+                password
             })
             .then(function (response) {
                 

@@ -6,6 +6,7 @@ import "./css/App.css";
 import React, { useState } from "react";
 import NavBarAdmin from "./components/NavBarAdmin";
 import axios from "./api/axios";
+import Cookies from 'js-cookie';
 const AUTH_URL = "auth/";
 
 function RegisterEmployee() {
@@ -62,12 +63,16 @@ function RegisterEmployee() {
 
     const handleRegisterEmployee = async () => {
         if (validateInputs()) {
-            await axios.post(AUTH_URL + "signup", { 
+            await axios.post(AUTH_URL + "registerEmployee", { 
                 name: userName, 
                 surnames: userLastName, 
-                email, 
+                email: email + "@safedriver.com", 
                 password, 
                 type
+            }, {
+                headers: {
+                    'Authorization': 'Bearer ' + Cookies.get("token")
+                }
             })
             .then(function (response) {
                 setUserName("");

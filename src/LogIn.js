@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import axios from "./api/axios";
+import Cookies from "js-cookie";
 const AUTH_URL = "auth/";
 
 function LogIn(props) {
@@ -47,12 +48,18 @@ function LogIn(props) {
             })
             .then(function (response) {
                 const user = response.data.user;
-                    
+                //TODO: add into sign up
+                Cookies.set("token", response.data.token);
+                localStorage.setItem('user', JSON.stringify(user));
+
                 if(user.type === "driver") {
-                    navigate("/");
+                    navigate("/historyReports");
                 } else if(user.type === "adjuster") {
-                    navigate("/");
+                    navigate("/adjusterReport");
                 } else if(user.type === "executive") {
+
+                    //TODO: add navigate to executive page
+                    
                     navigate("/");
                 } else if(user.type === "admin") {
                     navigate("/registerEmployee");

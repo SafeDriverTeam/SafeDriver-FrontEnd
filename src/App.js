@@ -4,6 +4,7 @@ import RegisterEmployee from "./RegisterEmployee";
 import "./css/App.css";
 import RegisterReport from "./RegisterReport";
 import HistoryReports from "./HistoryReports";
+import AdjusterReport from "./AdjusterReport";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                     <Route path="/registerEmployee" element={<RegisterEmployee />} />
                     <Route path="/RegisterReport" element={<RegisterReport/>}/>
                     <Route path ="/HistoryReports" element={<HistoryReports/>}/>
+                    <Route path="/adjusterReport" element={<AdjusterReport/>}/>
                 </Routes>
             </BrowserRouter>
         </div>

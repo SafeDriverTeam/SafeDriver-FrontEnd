@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "./api/axios";
-import './CSS/App.css';
+import './css/App.css';
 import Modal from "react-bootstrap/Modal";
 import Button from 'react-bootstrap/Button';
 import Cookies from "js-cookie";
@@ -46,7 +46,7 @@ function AdjusterReport() {
 
   const showReportDetails = (report, show) => {
     try {
-      const response = axios.get(IMAGES_URL + 'getByReportId/' + report.reportId);
+      const response = axios.get(IMAGES_URL + 'getByReportId/' + report.reportId, config);
       setImages(response.data);
       setShowModalDetails(show);
       setSelectedReport(report);
@@ -71,7 +71,7 @@ function AdjusterReport() {
     };
 
     try {
-      const response = await axios.put(REPORTS_URL + 'report/updateReportJudgment', data);
+      const response = await axios.put(REPORTS_URL + 'updateReportJudgment', data, config);
       console.log("Dictamen guardado exitosamente:", response.data);
       setShowModalDetails(false);
       setJudgmentText('');
@@ -80,7 +80,6 @@ function AdjusterReport() {
       setShowSaveErrorModal(true);
     }
     setShowDictamenSection(false);
-    setShowDetails(false);
     fetchReports();
   };
 
@@ -163,7 +162,7 @@ function AdjusterReport() {
               </div>
             </div>
           )}
-          {showDetails && images.length > 0 && (
+          {showDetails && images && (
             <div className='row mt-3'>
               <div className='col-12 col-lg offset-0 offset-lg-0'>
                 <h3>Imágenes:</h3>
@@ -205,8 +204,7 @@ function AdjusterReport() {
 
       <Modal show={showErrorModal} onHide={() => setShowErrorModal(false)}
         aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
+        centered>
         <Modal.Header closeButton>
           <Modal.Title>Error</Modal.Title>
         </Modal.Header>
@@ -216,9 +214,6 @@ function AdjusterReport() {
         <Modal.Footer>
           <Button variant="secondary" onClick={reloadPage}>
             Recargar
-          </Button>
-          <Button variant="primary" onClick={() => setShowErrorModal(false)}>
-            Cerrar
           </Button>
         </Modal.Footer>
       </Modal>
@@ -235,9 +230,6 @@ function AdjusterReport() {
         <Modal.Footer>
           <Button variant="secondary" onClick={saveJudgment}>
             Reintentar
-          </Button>
-          <Button variant="primary" onClick={() => setShowErrorModal(false)}>
-            Cerrar
           </Button>
         </Modal.Footer>
       </Modal>
