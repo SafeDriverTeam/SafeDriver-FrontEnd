@@ -11,7 +11,7 @@ const NavBarDriver = () => {
                 <Navbar.Brand href="/registerEmployee">
                     <img
                         alt=""
-                        src="./logo192.png"
+                        src="./logo.png"
                         width="30"
                         height="30"
                         className="d-inline-block align-top"
