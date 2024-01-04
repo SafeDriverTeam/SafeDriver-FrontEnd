@@ -31,8 +31,16 @@ function SignUp(props) {
             setUserNameError("El nombre es requerido");
             isValid = false;
 
+        } else if(!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/u.test(userName)) {
+            setUserNameError("El nombre no es válido");
+            isValid = false;
+
         } else if (userLastName === "") {
             setUserLastNameError("El apellido es requerido");
+            isValid = false;
+
+        } else if(!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/u.test(userLastName)) {
+            setUserLastNameError("El apellido no es válido");
             isValid = false;
 
         } else if (email === "") {
@@ -49,6 +57,10 @@ function SignUp(props) {
 
         } else if (password.length < 8) {
             setPasswordError("La contraseña debe tener al menos 8 caracteres");
+            isValid = false;
+
+        } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.])[a-zA-Z\d!@#$%^&*.]{8,}$/.test(password)) {
+            setPasswordError("La contraseña debe tener al menos una letra mayúscula, una letra minúscula, un caracter especial y un número");
             isValid = false;
         }
 
