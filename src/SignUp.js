@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import axios from "./api/axios";
+import Cookies from "js-cookie";
 const AUTH_URL = "auth/";
 
 function SignUp(props) {
@@ -63,8 +64,12 @@ function SignUp(props) {
                 password
             })
             .then(function (response) {
+                const user = response.data.user;
+                Cookies.set("token", response.data.token);
+                localStorage.setItem('user', JSON.stringify(user));
+                navigate("/historyReports");
                 
-                navigate("/");
+                props.onHide();
             })
             .catch(function (error) {
                 if(error.response.status === 409) {

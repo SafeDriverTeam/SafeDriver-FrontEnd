@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
+import Cookies from "js-cookie";
 
 function Home() {
     const [modalLoginShow, setModalLoginShow] = React.useState(false);
     const [modalSignUpShow, setModalSignUpShow] = React.useState(false);
+
+    useEffect(() => {
+        Cookies.remove("token");
+        localStorage.removeItem("user");
+    }, []);
 
     return (
         <div>

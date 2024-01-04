@@ -48,7 +48,6 @@ function LogIn(props) {
             })
             .then(function (response) {
                 const user = response.data.user;
-                //TODO: add into sign up
                 Cookies.set("token", response.data.token);
                 localStorage.setItem('user', JSON.stringify(user));
 
@@ -57,9 +56,6 @@ function LogIn(props) {
                 } else if(user.type === "adjuster") {
                     navigate("/adjusterReport");
                 } else if(user.type === "executive") {
-
-                    //TODO: add navigate to executive page
-                    
                     navigate("/");
                 } else if(user.type === "admin") {
                     navigate("/registerEmployee");
