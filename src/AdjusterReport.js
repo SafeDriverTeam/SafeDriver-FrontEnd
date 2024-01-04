@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from "./api/axios";
-import './css/App.css';
+import './CSS/App.css';
 import Modal from "react-bootstrap/Modal";
 import Button from 'react-bootstrap/Button';
+import Cookies from "js-cookie";
 const REPORTS_URL = "report/";
 const IMAGES_URL = "imageReport/";
 
+const config = {
+  headers: {
+    'Authorization': 'Bearer ' + Cookies.get("token")
+  }
+};
 
 function AdjusterReport() {
   const [reports, setReports] = useState([]);
@@ -22,7 +28,7 @@ function AdjusterReport() {
 
   const fetchReports = async () => {
     try {
-      const response = await axios.get(REPORTS_URL + 'getByAdjuster/' + 3);
+      const response = await axios.get(REPORTS_URL + 'getByAdjuster/' + 3, config);
       setReports(response.data.reportList);
     } catch (error) {
       setError('Hubo un problema al obtener los reportes');
