@@ -93,6 +93,7 @@ function LogIn(props) {
                             type="email"
                             placeholder="example@safedriver.com"
                             value={email}
+                            maxLength={320}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <Form.Label className="labelError">
@@ -106,6 +107,7 @@ function LogIn(props) {
                             type={showPassword ? "text" : "password"}
                             placeholder="**********"
                             value={password}
+                            maxLength={128}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <Form.Label className="labelError">

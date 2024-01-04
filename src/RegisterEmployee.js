@@ -120,6 +120,7 @@ function RegisterEmployee() {
                                 id="name"
                                 placeholder="Kendrick"
                                 value={userName}
+                                maxLength={50}
                                 onChange={(e) => setUserName(e.target.value)}
                             />
                             <Form.Label className="labelError">
@@ -132,6 +133,7 @@ function RegisterEmployee() {
                                 id="lastName"
                                 placeholder="Lamar"
                                 value={userLastName}
+                                maxLength={50}
                                 onChange={(e) =>
                                     setUserLastName(e.target.value)
                                 }
@@ -160,6 +162,7 @@ function RegisterEmployee() {
                                 id="empresarialEmail"
                                 placeholder="example"
                                 value={email}
+                                maxLength={64}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                             <InputGroup.Text id="basic-addon2">
@@ -177,6 +180,7 @@ function RegisterEmployee() {
                             type={showPassword ? "text" : "password"}
                             placeholder="**********"
                             value={password}
+                            maxLength={128}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <Form.Label className="labelError">

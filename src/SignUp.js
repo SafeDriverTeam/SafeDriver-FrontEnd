@@ -111,6 +111,7 @@ function SignUp(props) {
                                 id="name"
                                 placeholder="Kendrick"
                                 value={userName}
+                                maxLength={50}
                                 onChange={(e) => setUserName(e.target.value)}
                             />
                             <Form.Label className="labelError">
@@ -123,6 +124,7 @@ function SignUp(props) {
                                 id="lastName"
                                 placeholder="Lamar"
                                 value={userLastName}
+                                maxLength={50}
                                 onChange={(e) =>
                                     setUserLastName(e.target.value)
                                 }
@@ -141,6 +143,7 @@ function SignUp(props) {
                             type="email"
                             placeholder="example@safedriver.com"
                             value={email}
+                            maxLength={320}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <Form.Label className="labelError">
@@ -154,6 +157,7 @@ function SignUp(props) {
                             type={showPassword ? "text" : "password"}
                             placeholder="**********"
                             value={password}
+                            maxLength={128}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <Form.Label className="labelError">
