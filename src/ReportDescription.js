@@ -1,14 +1,8 @@
 import "./css/AppReport.css";
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const ReportDescription = ({selectedCar}) =>{
 
-    const navigate = useNavigate();
-
-    const handleGoBack = () => {
-        navigate(-1); 
-      };
 
 
       return (
@@ -41,7 +35,6 @@ const ReportDescription = ({selectedCar}) =>{
               ))}
                 <br></br>
                 <br></br>
-              <button onClick={handleGoBack}>Volver</button>
             </div>
           )}
         </div>
