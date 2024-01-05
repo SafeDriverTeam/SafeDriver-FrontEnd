@@ -25,16 +25,6 @@ const NavBarAdmin = () => {
                             Registrar empleado
                         </Nav.Link>
                     </Nav>
-                    <Nav className="me-auto">
-                        <Nav.Link href="/RegisterReport">
-                            Registrar reporte
-                        </Nav.Link>
-                    </Nav>
-                    <Nav className="me-auto">
-                        <Nav.Link href="/HistoryReports">
-                            Historial de reporte
-                        </Nav.Link>
-                    </Nav>
                 </Navbar.Collapse>
                 <Nav pullRight>
                     <Nav.Link href="/">Salir</Nav.Link>

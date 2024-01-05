@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import axios from "./api/axios";
+import Cookies from "js-cookie";
 const AUTH_URL = "auth/";
 
 function LogIn(props) {
@@ -47,11 +48,13 @@ function LogIn(props) {
             })
             .then(function (response) {
                 const user = response.data.user;
-                    
+                Cookies.set("token", response.data.token);
+                localStorage.setItem('user', JSON.stringify(user));
+
                 if(user.type === "driver") {
-                    navigate("/");
+                    navigate("/historyReports");
                 } else if(user.type === "adjuster") {
-                    navigate("/");
+                    navigate("/adjusterReport");
                 } else if(user.type === "executive") {
                     navigate("/");
                 } else if(user.type === "admin") {
@@ -90,6 +93,7 @@ function LogIn(props) {
                             type="email"
                             placeholder="example@safedriver.com"
                             value={email}
+                            maxLength={320}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <Form.Label className="labelError">
@@ -103,6 +107,7 @@ function LogIn(props) {
                             type={showPassword ? "text" : "password"}
                             placeholder="**********"
                             value={password}
+                            maxLength={128}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <Form.Label className="labelError">

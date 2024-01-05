@@ -8,10 +8,10 @@ const NavBarDriver = () => {
     return (
         <Navbar expand="lg" bg="dark" data-bs-theme="dark" className="bg-body-tertiary">
             <Container>
-                <Navbar.Brand href="/registerEmployee">
+                <Navbar.Brand href="/historyReports">
                     <img
                         alt=""
-                        src="./logo192.png"
+                        src="./logo.png"
                         width="30"
                         height="30"
                         className="d-inline-block align-top"
@@ -36,10 +36,10 @@ const NavBarDriver = () => {
                             title="Reporte de siniestro"
                             id="basic-nav-dropdown"
                         >
-                            <NavDropdown.Item href="/RegisterReport">
+                            <NavDropdown.Item href="/registerReport">
                                 Levantar reporte
                             </NavDropdown.Item>
-                            <NavDropdown.Item href="/HistoryReports">
+                            <NavDropdown.Item href="/historyReports">
                                 Historial de reportes
                             </NavDropdown.Item>
                         </NavDropdown>

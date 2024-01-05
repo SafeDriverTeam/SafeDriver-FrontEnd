@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import axios from "./api/axios";
+import Cookies from "js-cookie";
 const AUTH_URL = "auth/";
 
 function SignUp(props) {
@@ -30,8 +31,16 @@ function SignUp(props) {
             setUserNameError("El nombre es requerido");
             isValid = false;
 
+        } else if(!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/u.test(userName)) {
+            setUserNameError("El nombre no es válido");
+            isValid = false;
+
         } else if (userLastName === "") {
             setUserLastNameError("El apellido es requerido");
+            isValid = false;
+
+        } else if(!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/u.test(userLastName)) {
+            setUserLastNameError("El apellido no es válido");
             isValid = false;
 
         } else if (email === "") {
@@ -49,6 +58,10 @@ function SignUp(props) {
         } else if (password.length < 8) {
             setPasswordError("La contraseña debe tener al menos 8 caracteres");
             isValid = false;
+
+        } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.])[a-zA-Z\d!@#$%^&*.]{8,}$/.test(password)) {
+            setPasswordError("La contraseña debe tener al menos una letra mayúscula, una letra minúscula, un caracter especial y un número");
+            isValid = false;
         }
 
         return isValid;
@@ -60,12 +73,15 @@ function SignUp(props) {
                 name: userName, 
                 surnames: userLastName, 
                 email, 
-                password, 
-                type: "driver"
+                password
             })
             .then(function (response) {
+                const user = response.data.user;
+                Cookies.set("token", response.data.token);
+                localStorage.setItem('user', JSON.stringify(user));
+                navigate("/historyReports");
                 
-                navigate("/");
+                props.onHide();
             })
             .catch(function (error) {
                 if(error.response.status === 409) {
@@ -95,6 +111,7 @@ function SignUp(props) {
                                 id="name"
                                 placeholder="Kendrick"
                                 value={userName}
+                                maxLength={50}
                                 onChange={(e) => setUserName(e.target.value)}
                             />
                             <Form.Label className="labelError">
@@ -107,6 +124,7 @@ function SignUp(props) {
                                 id="lastName"
                                 placeholder="Lamar"
                                 value={userLastName}
+                                maxLength={50}
                                 onChange={(e) =>
                                     setUserLastName(e.target.value)
                                 }
@@ -125,6 +143,7 @@ function SignUp(props) {
                             type="email"
                             placeholder="example@safedriver.com"
                             value={email}
+                            maxLength={320}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <Form.Label className="labelError">
@@ -138,6 +157,7 @@ function SignUp(props) {
                             type={showPassword ? "text" : "password"}
                             placeholder="**********"
                             value={password}
+                            maxLength={128}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <Form.Label className="labelError">
