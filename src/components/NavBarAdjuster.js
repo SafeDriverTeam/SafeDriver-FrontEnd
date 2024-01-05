@@ -7,10 +7,10 @@ const NavBarAdjuster = () => {
     return (
         <Navbar expand="lg" bg="dark" data-bs-theme="dark" className="bg-body-tertiary">
             <Container>
-            <Navbar.Brand href="/registerEmployee">
+            <Navbar.Brand href="/adjusterReport">
                     <img
                         alt=""
-                        src="./logo192.png"
+                        src="./logo.png"
                         width="30"
                         height="30"
                         className="d-inline-block align-top"
@@ -20,7 +20,7 @@ const NavBarAdjuster = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/">
+                        <Nav.Link href="/adjusterReport">
                             Reportes asignados
                         </Nav.Link>
                     </Nav>

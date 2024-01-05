@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "./api/axios";
+import NavBarAdjuster from "./components/NavBarAdjuster";
 import './css/App.css';
 import Modal from "react-bootstrap/Modal";
 import Button from 'react-bootstrap/Button';
@@ -21,7 +22,7 @@ function AdjusterReport() {
   const [judgmentText, setJudgmentText] = useState('');
   const [reportId, setReportId] = useState(-1);
   const [modalDetails, setShowModalDetails] = React.useState(false);
-  const [images, setImages] = React.useState([]);
+  const [images, setImages] = useState([]);
   const [error, setError] = useState('');
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showSaveErrorModal, setShowSaveErrorModal] = useState(false);
@@ -44,14 +45,15 @@ function AdjusterReport() {
     fetchReports();
   }, []);
 
-  const showReportDetails = (report, show) => {
+  const showReportDetails = async (report, show) => {
     try {
-      const response = axios.get(IMAGES_URL + 'getByReportId/' + report.reportId, config);
-      setImages(response.data);
+      const response = await axios.get(IMAGES_URL + 'getByReportId/' + report.reportId, config);
+      setImages(response.data.images);
       setShowModalDetails(show);
       setSelectedReport(report);
       setShowDetails(show);
       setReportId(report.reportId);
+      setJudgmentText(report.judgment);
       setShowDictamenSection(false);
     }
     catch (error) {
@@ -72,7 +74,6 @@ function AdjusterReport() {
 
     try {
       const response = await axios.put(REPORTS_URL + 'updateReportJudgment', data, config);
-      console.log("Dictamen guardado exitosamente:", response.data);
       setShowModalDetails(false);
       setJudgmentText('');
     } catch (error) {
@@ -84,6 +85,8 @@ function AdjusterReport() {
   };
 
   return (
+    <div className='container-fluid'>
+      <NavBarAdjuster />
     <div className='container-fluid'>
       <div className='row mt-3'>
         <div className='col-md-4 offset-4'>
@@ -145,6 +148,13 @@ function AdjusterReport() {
                   <p>Fecha: {new Date(selectedReport.date).toLocaleDateString()}</p>
                   <p>Descripción: {selectedReport.declaration}</p>
                   <p>Lugar: {selectedReport.place}</p>
+                  <div className="row">
+                    {images.map((image) => (
+                      <div key={image.imageReportId} className="col-lg-3 col-md-4 col-sm-6 mb-3">
+                        <img src={image.image} alt={`Imagen ${image.imageReportId}`} className="img-fluid" />
+                      </div>
+                    ))}
+                  </div>
                   <div >
                   <button
                     type="button"
@@ -159,23 +169,6 @@ function AdjusterReport() {
                     Dar Dictamen
                   </button>
                   </div>
-              </div>
-            </div>
-          )}
-          {showDetails && images && (
-            <div className='row mt-3'>
-              <div className='col-12 col-lg offset-0 offset-lg-0'>
-                <h3>Imágenes:</h3>
-                <div>
-                  {images.map((imageUrl, index) => (
-                    <img
-                      key={index}
-                      src={imageUrl}
-                      alt={`Imagen ${index}`}
-                      style={{ width: '200px', height: 'auto', marginRight: '10px' }}
-                    />
-                  ))}
-                </div>
               </div>
             </div>
           )}
@@ -233,6 +226,7 @@ function AdjusterReport() {
           </Button>
         </Modal.Footer>
       </Modal>
+      </div>
     </div>
   );
 }
