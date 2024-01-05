@@ -1,119 +1,132 @@
-  import React, { useState, useEffect } from 'react';
-  import "./css/AppReport.css";
-  import NavBarDriver from './components/NavBarDriver';
-  import Table  from 'react-bootstrap/Table';
-  import ReportDescription from './ReportDescription';
+    import React, { useState, useEffect } from 'react';
+    import "./css/AppReport.css";
+    import NavBarDriver from './components/NavBarDriver';
+    import Table  from 'react-bootstrap/Table';
+    import axios from './api/axios';
+    import Cookies from "js-cookie";
+    import ReportDescription from './ReportDescription';
+    const REPORTS_URL = "report/";
+    const VEHICLE_URL = "vehicle/";
+    const POLICY_URL = "policy/";
+    const IMAGES_URL = "imageReport/";
 
-
-  const HistoryReports = () =>{
-
-    const [selectedCar, setSelectedCar] = useState(null);
-    const [data, setData] = useState([]);
-    const [showDetail, setShowDetail] = useState(false);
-
-
-    const fetchVehicleInfo = async (car) => {
-      try {
-        const vehicleId = car.vehicleId.vehicleId; 
-        const vehicleResponse = await fetch(`http://localhost:3001/vehicle/getByVehicleId/${vehicleId}`);
-        if (vehicleResponse.ok) {
-          const vehicleData = await vehicleResponse.json();
-          return vehicleData;
-        } else {
-          console.log('Error al obtener datos de la API de vehículos');
-          return null;
-        }
-      } catch (error) {
-        console.error('Error al realizar la consulta a la API de vehículos:', error);
-        return null;
+    const config = {
+      headers: {
+        'Authorization': 'Bearer ' + Cookies.get("token")
       }
     };
 
-    const fetchVehicleInfoForAll = async (reportsData, policyData, imagesData) => {
-      const updatedDataPromises = reportsData.map(async (report, index) => {
-        const car = { ...report, vehicleId: policyData[index], images: imagesData.find(img => img.reportId === report.reportId)?.images || []};
-        const vehicleInfo = await fetchVehicleInfo(car);
-        return { ...car, vehicleInfo };
-      });
+    const user = JSON.parse(localStorage.getItem('user'));
 
-      return await Promise.all(updatedDataPromises);
-    };
+    const HistoryReports = () =>{
+
+      const [selectedCar, setSelectedCar] = useState(null);
+      const [data, setData] = useState([]);
+      const [showDetail, setShowDetail] = useState(false);
 
 
-    useEffect(() => {
-      const fetchData = async () => {
+      const fetchVehicleInfo = async (car) => {
         try {
-          const response = await fetch('http://localhost:3001/report/getByUserId/4');
-          if (response.ok) {
-            const reportsData = await response.json();
-
-            const policyData = await fetchPolicyData(reportsData);
-
-            const imagesData = await fetchImagesForAll(reportsData);
-
-            const updatedData = await fetchVehicleInfoForAll(reportsData, policyData, imagesData);
-
-            setData(updatedData);
+          const vehicleId = car.vehicleId.vehicleId; 
+          const vehicleResponse = await axios.get(VEHICLE_URL+'getByVehicleId/'+vehicleId, config);
+          if (vehicleResponse.status === 200) {
+            const vehicleData = await vehicleResponse.data;
+            return vehicleData;
           } else {
-            console.log('Error al obtener datos de la API');
+            console.log('Error al obtener datos de la API de vehículos');
+            return null;
           }
         } catch (error) {
-          console.log(error);
+          console.error('Error al realizar la consulta a la API de vehículos:', error);
+          return null;
         }
       };
 
-      fetchData();
-    }, []);
-
-    const fetchPolicyData = async (apiCarsData) => {
-      try {
-        const promises = apiCarsData.map(async (car) => {
-          const policyResponse = await fetch(`http://localhost:3001/policy/getById/${car.policyId}`);
-          if (policyResponse.ok) {
-            const policyData = await policyResponse.json();
-            return policyData;
-          } else {
-            console.error(`Error al obtener datos de la API de pólizas para el ID ${car.policyId}`);
-            return null;
-          }
+      const fetchVehicleInfoForAll = async (reportsData, policyData, imagesData) => {
+        const updatedDataPromises = reportsData.map(async (report, index) => {
+          const car = { ...report, vehicleId: policyData[index], images: imagesData.find(img => img.reportId === report.reportId)?.images || []};
+          const vehicleInfo = await fetchVehicleInfo(car);
+          return { ...car, vehicleInfo };
         });
 
-        const policyDataResults = await Promise.all(promises);
-        return policyDataResults.filter(data => data !== null);
-      } catch (error) {
-        console.error('Error al realizar la consulta a la API de pólizas:', error);
-        return [];
-      }
-    };
+        return await Promise.all(updatedDataPromises);
+      };
 
-    const fetchImagesForAll = async (reportsData) => {
-      try {
-        const imagesPromises = reportsData.map(async (report) => {
-          const imageResponse = await fetch(`http://localhost:3001/imageReport/getByReportId/${report.reportId}`);
-          if (imageResponse.ok) {
-            const imageData = await imageResponse.json();
-            return { reportId: report.reportId, images: imageData };
-          } else {
-            console.error(`Error al obtener imágenes para el reporte ID ${report.reportId}`);
-            return null;
+
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get(REPORTS_URL+"getByDriverId/"+user.userId, config);
+            if (response.status === 201) {
+              const reportsData = await response.data;
+
+              const policyData = await fetchPolicyData(reportsData);
+
+              const imagesData = await fetchImagesForAll(reportsData);
+
+              const updatedData = await fetchVehicleInfoForAll(reportsData, policyData, imagesData);
+
+              setData(updatedData);
+            } else {
+              console.log('Error al obtener datos de la API');
+            }
+          } catch (error) {
+            console.log(error);
           }
-        });
-    
-        const imagesResults = await Promise.all(imagesPromises);
-        return imagesResults.filter(data => data !== null);
-      } catch (error) {
-        console.error('Error al realizar la consulta a la API de imágenes:', error);
-        return [];
-      }
-    };
+        };
 
-    
-    
+        fetchData();
+      }, []);
 
-    const handleSelectCar = (car) => {
-      setSelectedCar(car);
-      setShowDetail(true); // Muestra la pantalla de detalles
-    };
+      const fetchPolicyData = async (apiCarsData) => {
+        try {
+          const promises = apiCarsData.map(async (car) => {
+            const policyResponse = await axios.get(POLICY_URL + "getById/" + car.policyId, config);
+            if (policyResponse.status === 200) {
+              const policyData = policyResponse.data; 
+              return policyData;
+            } else {
+              console.error(`Error al obtener datos de la API de pólizas para el ID ${car.policyId}`);
+              return null;
+            }
+          });
+          const policyDataResults = await Promise.all(promises);
+          return policyDataResults.filter(data => data !== null);
+        } catch (error) {
+          console.error('Error al realizar la consulta a la API de pólizas:', error);
+          return [];
+        }
+      };
+
+      const fetchImagesForAll = async (reportsData) => {
+        try {
+          const imagesPromises = reportsData.map(async (report) => {
+            const imageResponse = await axios.get(IMAGES_URL+"getByReportId/"+report.reportId, config);
+
+            if (imageResponse.status === 200 ) {
+              const imageData = await imageResponse.data;
+              return { reportId: report.reportId, images: imageData };
+            } else {
+              console.error(`Error al obtener imágenes para el reporte ID ${report.reportId}`);
+              return null;
+            }
+          });
+      
+          const imagesResults = await Promise.all(imagesPromises);
+          return imagesResults.filter(data => data !== null);
+        } catch (error) {
+          console.error('Error al realizar la consulta a la API de imágenes:', error);
+          return [];
+        }
+      };
+
+      
+      
+
+      const handleSelectCar = (car) => {
+        setSelectedCar(car);
+        setShowDetail(true); 
+      };
 
 
     return (
@@ -138,7 +151,7 @@
             <tbody>
               {data.map((car) => (
                 <tr
-                  key={car.id}
+                  key={car.reportId}
                   className={selectedCar && selectedCar.id === car.id ? 'selected' : ''}
                   onClick={() => handleSelectCar(car)}
                 >

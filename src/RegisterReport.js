@@ -5,13 +5,28 @@ import "./css/App.css";
 import NavBarAdmin from "./components/NavBarDriver";
 import Table from 'react-bootstrap/Table';
 import AWS from 'aws-sdk';
+import Cookies from "js-cookie";
+import axios from './api/axios';
 import { useNavigate } from 'react-router-dom';
+
+const user = JSON.parse(localStorage.getItem('user'));
+const REPORTS_URL = "report/";
+const IMAGES_URL = "imageReport/";
+const VEHICLE_URL = "vehicle/";
+const POLICY_URL = "policy/";
 
 AWS.config.update({
   accessKeyId: 'AKIA5TD46D54C2F6DLMX',
   secretAccessKey: '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',
   region: 'us-east-2'
 });
+
+const config = {
+  headers: {
+    'Authorization': 'Bearer ' + Cookies.get("token")
+  }
+};
+
 
 const s3 = new AWS.S3();
 
@@ -31,51 +46,55 @@ const GeoLocationComponent = () => {
   const navigate = useNavigate();
 
   
-  useEffect(()=>{
-    try{
-      fetch('http://localhost:3001/vehicle/getVehicleByUserId/4')
-    .then(response => response.json())
-    .then(data => setCarsData(data))
-    .catch(error => console.error('Error al recuperar los vehículos:',error));
-    }catch(error){
-      alert('Error al recuperar los vehículos, favor de intentar más tarde.');
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(VEHICLE_URL+"getVehicleByUserId/"+user.userId, config);
+        setCarsData(response.data);
+      } catch (error) {
+        console.error('Error al recuperar los vehículos:', error);
+        alert('Error al recuperar los vehículos, favor de intentar más tarde.');
+      }
+    };
+  
+    fetchData();
   }, []);
-
 
   
 
   useEffect(() => {
     if (selectedCar) {
       const fetchPolicy = async () => {
-        fetch('http://localhost:3001/policy/getPolicyByVehicleId/'+selectedCar.vehicleId)
-      .then(response => response.json())
-      .then(data => {
-        try{
-        let newCar = selectedCar;
-        newCar.policyId = data[0].policyId;
-        newCar.acquisitionDate = data[0].acquisitionDate;
-        newCar.amount = data[0].amount;
-        newCar.userId = data[0].userId;
-        let policyDate = new Date(data[0].expirationDate);
-        newCar.typePolicy = data[0].typePolicy;
-        newCar.policyId = data[0].policyId;
-        if (newCar.policyId > 0) {
-          if(policyDate > new Date()){
-            setSelectedCar(newCar);
-          }else{
-            alert('El vehículo cuenta con una póliza pero no está vigente');
+        try {
+          const response = await axios.get(POLICY_URL+"getPolicyByVehicleId/"+selectedCar.vehicleId, config);
+          const data = response.data;
+          try {
+            let newCar = selectedCar;
+            newCar.policyId = data[0].policyId;
+            newCar.acquisitionDate = data[0].acquisitionDate;
+            newCar.amount = data[0].amount;
+            newCar.userId = data[0].userId;
+            let policyDate = new Date(data[0].expirationDate);
+            newCar.typePolicy = data[0].typePolicy;
+            newCar.policyId = data[0].policyId;
+            if (newCar.policyId > 0) {
+              if (policyDate > new Date()) {
+                setSelectedCar(newCar);
+              } else {
+                alert('El vehículo cuenta con una póliza pero no está vigente');
+                setSelectedCar(null);
+              }
+            }
+          } catch (error) {
+            console.log(error);
+            alert('El vehículo no cuenta con una póliza');
             setSelectedCar(null);
           }
+        } catch (error) {
+          console.error(`Error al obtener datos de la API de pólizas para el ID ${selectedCar.vehicleId}:`, error);
         }
-      }catch(error){
-          console.log(error);
-          alert('El vehículo no cuenta con una póliza');
-          setSelectedCar(null);
-        }
-      })
-        }
-        fetchPolicy();
+      };
+      fetchPolicy();
     }
   }, [selectedCar]);
 
@@ -271,17 +290,12 @@ useEffect(() => {
           policyId: policyId,
           involved: involved,
           vehiclesInvolved: vehiclesInvolved,
-          userId: 4
+          userId: 1,
+          driverId: user.userId,
         }
-        const response = await fetch('http://localhost:3001/report/createReport', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-      });
-      if (response.ok) {
-        const responseData = await response.json();
+        const response = await axios.post(REPORTS_URL+"createReport", requestBody, config);
+      if (response.status === 201) {
+        const responseData = response.data;
         let result = true;
         // Realizar el segundo llamado a la API para insertar los nombres de archivo y el ID del reporte
         for (const fileNamePromise of uploadPromises) {
@@ -291,14 +305,8 @@ useEffect(() => {
             reportId: responseData.reportId, 
           };
 
-          const imageReportResponse = await fetch('http://localhost:3001/imageReport/createImageReport', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(imageReportBody),
-          });
-          if (imageReportResponse.ok && result === true) {
+          const imageReportResponse = await axios.post(IMAGES_URL+"createImageReport", imageReportBody, config);
+          if (imageReportResponse.status === 201 && result === true) {
             console.log('Imagen registrada');
           } else {
             result=false;
@@ -307,7 +315,7 @@ useEffect(() => {
         }
         if(result === true){
           alert('Reporte registrado correctamente.');
-          navigate(-1);
+          navigate('/historyReports');
         }else{
           alert('Error al registrar el reporte, favor de intentar más tarde.');
         }
