@@ -25,7 +25,7 @@ const ReportDescription = ({selectedCar}) =>{
     
               {/* Mostrar imágenes */}
               <h5>Imágenes del siniestro:</h5>
-              {selectedCar.images.map((image, index) => (
+              {selectedCar.images.images.map((image, index) => (
                 <img
                   key={index}
                   src={image.image}
