@@ -53,7 +53,7 @@ function AssignAdjuster() {
 
     const handleConfirmAssign = () => {
         if (selectedSiniestro && selectedAdjuster) {
-            axios.put('http://localhost:3001/report/setAdjuster', { 
+            axios.put('report/setAdjuster', { 
                 reportId: selectedSiniestro, 
                 adjusterId: selectedAdjuster 
             })
