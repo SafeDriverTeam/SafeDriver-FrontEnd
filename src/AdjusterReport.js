@@ -189,7 +189,7 @@ function AdjusterReport() {
                   </div>
                 </div>
                 <div className='row'>
-                <div className='col-lg-6'>
+                  <div className='col-lg-6'>
                     <h5>Reporte</h5>
                     <p>ID: {selectedReport.report.reportId}</p>
                     <p>Fecha: {new Date(selectedReport.report.date).toLocaleDateString()}</p>
@@ -203,8 +203,12 @@ function AdjusterReport() {
                     <p>Color: {selectedReport.vehicle.color}</p>
                     <p>Modelo: {selectedReport.vehicle.year}</p>
                   </div>
+                  <div className='col-lg-6'>
+                    <h5>Involucrados</h5>
+                    <p>Individuos: {selectedReport.report.involved} </p>
+                    <p>Vehiculo: {selectedReport.report.vehiclesInvolved}</p>
+                  </div>
                   <div className="row">
-                  <p>Imágenes:</p>
                       {images.map((image) => (
                         <div key={image.imageReportId} className="col-lg-3 col-md-4 col-sm-6 mb-3">
                           <img src={image.image} alt={`Imagen ${image.imageReportId}`} className="img-fluid" />
