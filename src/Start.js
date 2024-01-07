@@ -9,7 +9,7 @@ function Start() {
             <div className="start">
               <Navbar bg="dark" variant="dark" expand="lg">
                 <Container>
-                <Navbar.Brand href="/start">
+                <Navbar.Brand href="/">
                     <img
                         alt=""
                         src="./logo.png"
