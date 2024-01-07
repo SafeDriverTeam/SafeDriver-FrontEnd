@@ -161,15 +161,22 @@
         cursor: help;
     }
     
+    .plan-container {
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+    }
+    
 
     .description-text {
-        max-width: 800px; /* O el ancho que prefieras para centrar el texto */
-        margin: 0 auto; /* Margen automático para centrar horizontalmente */
-        padding: 1rem; /* Añade padding si es necesario */
+        max-width: 800px; 
+        margin: 0 auto; 
+        padding: 1rem;
     }
     .header-container {
-        background-color: #fff; /* Establece el fondo blanco */
-        padding: 2rem 0; /* Añade padding vertical */
+        background-color: #fff; 
+        padding: 2rem 0; 
     }
 
 @media (max-width: 768px) {
