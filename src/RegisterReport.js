@@ -224,8 +224,8 @@ useEffect(() => {
     if(validateIncidentType() === false){
       result = false;
     }
-    if(declaration === '' || declaration.length > 500){
-      alert('Ingresa una declaración que no supere los 500 caracteres.');
+    if(declaration === '' || declaration.length > 250){
+      alert('Ingresa una declaración que no supere los 250 caracteres.');
       result = false;
     }
     if(involvedNames.length === 0){

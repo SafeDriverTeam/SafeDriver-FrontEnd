@@ -145,6 +145,7 @@
                 <th>Modelo</th>
                 <th>Número de Placas</th>
                 <th>Fecha</th>
+                <th>Dictamen</th>
                 <th>Seleccionar</th>
               </tr>
             </thead>
@@ -160,6 +161,7 @@
                   <td>{car.vehicleInfo.model}</td>
                   <td>{car.vehicleInfo.plate}</td>
                   <td>{car.date}</td>
+                  <td>{car.judgment}</td>
                   <td>
                     <button onClick={() => handleSelectCar(car)}>Seleccionar</button>
                   </td>
