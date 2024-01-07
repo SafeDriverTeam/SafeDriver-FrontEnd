@@ -125,7 +125,7 @@ function AdjusterReport() {
       <NavBarAdjuster />
       <div className='container-fluid'>
         <div className='row mt-3'>
-          <div className='col-md-4 offset-4'>
+          <div className='col-md-4 offset-2'>
             <div className='c-grid mx-auto'>
               <h2>Lista de reportes</h2>
             </div>
@@ -283,11 +283,6 @@ function AdjusterReport() {
           <Modal.Body>
             {error && <p>{error}</p>}
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={saveJudgment}>
-              Reintentar
-            </Button>
-          </Modal.Footer>
         </Modal>
       </div>
     </div>

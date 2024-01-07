@@ -167,13 +167,12 @@ function SignUp(props) {
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button
-                    variant="primary"
+                <button
                     onClick={handleSignUp}
                     className="signUpButton"
                 >
                     Registrarse
-                </Button>{" "}
+                </button>{" "}
             </Modal.Footer>
         </Modal>
     );

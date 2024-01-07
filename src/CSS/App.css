@@ -73,6 +73,9 @@
 }
 
 .logInButton {
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 5px;
     width: 100%;
 }
 
@@ -86,6 +89,10 @@
 }
 
 .signUpButton {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 5px;
     width: 100%;
 }
 
@@ -270,11 +277,15 @@
 }
 
 .primaryButton {
+    background-color: #4caf50;
+    border-radius: 5px;
     margin-top: 15px;
     width: 100%;
 }
 
 .secondaryButton {
+    background-color: #0D4C57;
+    border-radius: 5px;
     margin-top: 25px;
     width: 100%;
 }

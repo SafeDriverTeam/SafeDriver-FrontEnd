@@ -69,7 +69,6 @@ function Start() {
                         <ul>
                         <li>Seguro de responsabilidad civil</li>
                         <li>Seguro de daños propios</li>
-                        <li>Seguro de robo</li>
                         <li>Asistencia en carretera</li>
                         </ul>
                     </Row>
@@ -95,6 +94,20 @@ function Start() {
         
                 <h2 id="contact">Contacto</h2>
                 <p>Información de contacto de la empresa.</p>
+                <Row>
+                <Col>
+                    <h3>Oficina Central</h3>
+                    <p>Av. Xalapa</p>
+                    <p>Horario de atención: 9:00 a 18:00</p>
+                    <p>Teléfono: 555-45213</p>
+                </Col>
+                <Col>
+                    <h3>Sucursal Norte</h3>
+                    <p>Av. Orizaba</p>
+                    <p>Horario de atención: 9:00 a 18:00</p>
+                    <p>Teléfono: 555-57893</p>
+                </Col>
+                </Row>  
             </Container>
             </div>
           </div>

@@ -6,7 +6,7 @@ const ReportDescription = ({selectedCar}) =>{
 
 
       return (
-        <div>
+        <div className='container-fluid mt-3'>
           <h1>Detalles del Reporte</h1>
           <br></br>
           {selectedCar && (

@@ -132,44 +132,54 @@
     return (
       <div>
         <NavBarDriver />
-        <h1 className='title'>Historial de reportes</h1>
-  
-        {showDetail ? (
-          <ReportDescription selectedCar={selectedCar} />
-        ) : (
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Numero Reporte</th>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>Número de Placas</th>
-                <th>Fecha</th>
-                <th>Dictamen</th>
-                <th>Seleccionar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((car) => (
-                <tr
-                  key={car.reportId}
-                  className={selectedCar && selectedCar.id === car.id ? 'selected' : ''}
-                  onClick={() => handleSelectCar(car)}
-                >
-                  <td>{car.reportId}</td>
-                  <td>{car.vehicleInfo.brand}</td>
-                  <td>{car.vehicleInfo.model}</td>
-                  <td>{car.vehicleInfo.plate}</td>
-                  <td>{car.date}</td>
-                  <td>{car.judgment}</td>
-                  <td>
-                    <button onClick={() => handleSelectCar(car)}>Seleccionar</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        )}
+        <div className='container-fluid'>
+          <div className='col-md-4 offset-2'>
+              <h1 className='title'>Historial de reportes</h1>
+          </div>
+        </div>
+        
+        <div className='row mt-3'>
+          <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
+            <div className='table-responsive card'>
+              {showDetail ? (
+                <ReportDescription selectedCar={selectedCar} />
+              ) : (
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Numero Reporte</th>
+                      <th>Marca</th>
+                      <th>Modelo</th>
+                      <th>Número de Placas</th>
+                      <th>Fecha</th>
+                      <th>Dictamen</th>
+                      <th>Seleccionar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((car) => (
+                      <tr
+                        key={car.reportId}
+                        className={selectedCar && selectedCar.id === car.id ? 'selected' : ''}
+                        onClick={() => handleSelectCar(car)}
+                      >
+                        <td>{car.reportId}</td>
+                        <td>{car.vehicleInfo.brand}</td>
+                        <td>{car.vehicleInfo.model}</td>
+                        <td>{car.vehicleInfo.plate}</td>
+                        <td>{new Date(car.date).toLocaleDateString()}</td>
+                        <td>{car.judgment}</td>
+                        <td>
+                          <button className='primary' onClick={() => handleSelectCar(car)}>Seleccionar</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     );
   };

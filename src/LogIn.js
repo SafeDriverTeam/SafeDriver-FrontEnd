@@ -83,7 +83,7 @@ function LogIn(props) {
                 <Modal.Title id="LogInModal">Inicio de sesión</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className="logIn">
+                <div className="logIn container-fluid">
                     <div>
                         <Form.Label for="personalEmail" className="inputFieldLabel">
                             Correo electrónico *
@@ -117,13 +117,13 @@ function LogIn(props) {
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button
+                <button
                     variant="primary"
                     onClick={handleLogIn}
                     className="logInButton"
                 >
                     Iniciar sesión
-                </Button>{" "}
+                </button>{" "}
             </Modal.Footer>
         </Modal>
     );
