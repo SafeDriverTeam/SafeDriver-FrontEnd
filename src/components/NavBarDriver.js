@@ -25,10 +25,10 @@ const NavBarDriver = () => {
                             title="Póliza de seguro"
                             id="basic-nav-dropdown"
                         >
-                            <NavDropdown.Item href="/">
+                            <NavDropdown.Item href="/buyPolicy">
                                 Comprar póliza
                             </NavDropdown.Item>
-                            <NavDropdown.Item href="/">
+                            <NavDropdown.Item href="/userPolicies">
                                 Pólizas compradas
                             </NavDropdown.Item>
                         </NavDropdown>

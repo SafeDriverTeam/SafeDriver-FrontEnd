@@ -6,6 +6,10 @@ import RegisterReport from "./RegisterReport";
 import HistoryReports from "./HistoryReports";
 import AdjusterReport from "./AdjusterReport";
 import Start from "./Start";
+import BuyInsurancePolicyPage from "./BuyPolicy";
+import AssignAdjuster from "./AssignAdjuster";
+import UserPolicies from "./UserPolicies";
+
 
 function App() {
     return (
@@ -20,6 +24,9 @@ function App() {
                     <Route path="/adjusterReport" element={<AdjusterReport/>}/>
                     <Route path="*" element={<h1>Not Found</h1>} />
                     <Route path="/:id" element={<h1>Not Found</h1>} />
+                    <Route path="/buyPolicy" element={<BuyInsurancePolicyPage />} />
+                    <Route path="/assignAdjuster" element={<AssignAdjuster />} />
+                    <Route path="/userPolicies" element={<UserPolicies/>} />
                 </Routes>
             </BrowserRouter>
         </div>

@@ -110,6 +110,139 @@
     background-color: white;
 }
 
+.buyInsuranceForm {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 1024px; 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.buyInsuranceForm h2 {
+    color: #333;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.buyInsuranceForm .form-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start; 
+}
+
+    .buyInsuranceForm .form-group label {
+        flex-basis: 100%; 
+        font-size: 16px;
+        margin-bottom: 0.5rem;
+    }
+
+    .buyInsuranceForm .form-control,
+    .buyInsuranceForm select.form-control {
+        flex: 1;
+        margin-right: 1rem;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+        font-size: 16px;
+        border: 1px solid #ccc;
+    }
+
+    .buyInsuranceForm .form-group .form-control:last-child {
+        margin-right: 0;
+        
+    }
+
+    .buyInsuranceForm .btn-primary {
+        background-color: #000000;
+        border-color: #000000;
+        color: #ffffff;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 4px;
+        width: auto; 
+        margin-top: 1rem;
+    }
+
+    .info-icon {
+        display: inline-block;
+        margin-left: 5px;
+        cursor: help;
+    }
+    
+    .plan-container {
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+    }
+    
+
+    .description-text {
+        max-width: 800px; 
+        margin: 0 auto; 
+        padding: 1rem;
+    }
+    .header-container {
+        background-color: #fff; 
+        padding: 2rem 0; 
+    }
+
+@media (max-width: 768px) {
+    .buyInsuranceForm .form-group {
+        flex-direction: column;
+    }
+
+    .buyInsuranceForm .form-control {
+        margin-right: 0;
+        margin-bottom: 1rem;
+        flex-basis: auto; 
+    }
+
+    .buyInsuranceForm select.form-control {
+        flex-basis: auto; 
+    }
+
+    .buyInsuranceForm .form-group .form-control:last-child {
+        margin-bottom: 0;
+    }
+}
+
+
+.form-inline-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-inline-group > div {
+    flex-basis: calc(50% - 0.5rem); 
+}
+
+@media (max-width: 992px) {
+    .form-inline-group > div {
+        flex-basis: 100%; 
+    }
+}
+
+
+.insurance-banner {
+    height: 50vh; 
+    background-image: url('/src/img/bannerPoliza.png'); 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
 .registerEmployeeButton {
     margin-top: 10px;
     width: 100%;

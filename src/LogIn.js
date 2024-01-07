@@ -56,7 +56,7 @@ function LogIn(props) {
                 } else if(user.type === "adjuster") {
                     navigate("/adjusterReport");
                 } else if(user.type === "executive") {
-                    navigate("/");
+                    navigate("/assignAdjuster");
                 } else if(user.type === "admin") {
                     navigate("/registerEmployee");
                 }
