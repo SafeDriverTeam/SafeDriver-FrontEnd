@@ -20,7 +20,7 @@ const NavBarExecutive = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/">Reportes de siniestro</Nav.Link>
+                        <Nav.Link href="/assignAdjuster">Reportes de siniestro</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 <Nav pullRight>
