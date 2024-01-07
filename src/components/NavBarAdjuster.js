@@ -7,7 +7,7 @@ const NavBarAdjuster = () => {
     return (
         <Navbar expand="lg" bg="dark" data-bs-theme="dark" className="bg-body-tertiary">
             <Container>
-            <Navbar.Brand href="/adjusterReport">
+            <Navbar.Brand href="/start">
                     <img
                         alt=""
                         src="./logo.png"
