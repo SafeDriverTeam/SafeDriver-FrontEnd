@@ -149,3 +149,25 @@
 .inputFieldLabel {
     font-weight: 500;
 } 
+
+.primary {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.secondary {
+    background-color: #0D4C57;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+}
