@@ -20,7 +20,7 @@ function Start() {
                     SafeDriver
                 </Navbar.Brand>
                 <Nav pullRight>
-                    <Nav.Link href="/">Ingresar</Nav.Link>
+                    <Nav.Link href="/home">Ingresar</Nav.Link>
                 </Nav>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 </Container>

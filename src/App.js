@@ -12,14 +12,14 @@ function App() {
         <div>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element= {<Start/>} />
+                    <Route path="/home" element={<Home />} />
                     <Route path="/registerEmployee" element={<RegisterEmployee />} />
                     <Route path="/registerReport" element={<RegisterReport/>}/>
-                    <Route path ="/historyReports" element={<HistoryReports/>}/>
+                    <Route path="/historyReports" element={<HistoryReports/>}/>
                     <Route path="/adjusterReport" element={<AdjusterReport/>}/>
                     <Route path="*" element={<h1>Not Found</h1>} />
                     <Route path="/:id" element={<h1>Not Found</h1>} />
-                    <Route path="/start" element= {<Start/>} />
                 </Routes>
             </BrowserRouter>
         </div>
