@@ -57,7 +57,7 @@ function RegisterEmployee() {
             setEmailError("El correo electrónico es requerido");
             isValid = false;
 
-        } else if (!/^[a-zA-Z]+$/.test(email)) {
+        } else if (!/^[a-zA-Z0-9_.-]+$/.test(email)) {
             setEmailError("El correo electrónico no es válido");
             isValid = false;
 
