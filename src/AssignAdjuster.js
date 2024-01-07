@@ -1,6 +1,6 @@
 import React, { useState,useEffect  } from 'react';
 import { Button, Form, Table, Modal, Container } from 'react-bootstrap';
-import NavBarAdmin from './components/NavBarAdmin';
+import NavBarExecutive from './components/NavBarExecutive';
 import axios from "./api/axios";
 import noSiniestrosImage from './img/asignar.png';
 import Cookies from "js-cookie";
@@ -80,7 +80,7 @@ function AssignAdjuster() {
 
     return  (
         <Container fluid>
-            <NavBarAdmin />
+            <NavBarExecutive />
             <br></br>
             <h2>Asignación de ajustador a siniestro</h2>
             <br></br>

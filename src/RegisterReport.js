@@ -2,7 +2,7 @@
 import React, { useEffect, useState} from 'react';
 import "./css/AppReport.css";
 import "./css/App.css";
-import NavBarAdmin from "./components/NavBarDriver";
+import NavBarDriver from "./components/NavBarDriver";
 import Table from 'react-bootstrap/Table';
 import AWS from 'aws-sdk';
 import Cookies from "js-cookie";
@@ -347,7 +347,7 @@ useEffect(() => {
 
   return (
     <div>
-      <NavBarAdmin />
+      <NavBarDriver />
       <h1 className='title'>Registrar Reporte</h1>
       {/* Tabla de autos */}
       <Table striped bordered hover>
