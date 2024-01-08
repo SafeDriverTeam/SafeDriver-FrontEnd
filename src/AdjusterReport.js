@@ -69,8 +69,9 @@ function AdjusterReport() {
 
   const showReportDetails = async (reportData, show) => {
     try {
-      const response = await axios.get(IMAGES_URL + 'getByReportId/' + reportData.report.reportId, config);
-      setImages(response.data.images);
+      await axios.get(IMAGES_URL + 'getByReportId/' + reportData.report.reportId, config).then((response) => {
+        setImages(response.data.images);
+      });
       setShowModalDetails(show);
       setSelectedReport(reportData);
       setShowDetails(show);
