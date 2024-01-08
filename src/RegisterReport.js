@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState} from 'react';
 import "./css/AppReport.css";
 import "./css/App.css";
@@ -8,30 +7,30 @@ import AWS from 'aws-sdk';
 import Cookies from "js-cookie";
 import axios from './api/axios';
 import { useNavigate } from 'react-router-dom';
-
+ 
 const user = JSON.parse(localStorage.getItem('user'));
 const REPORTS_URL = "report/";
 const IMAGES_URL = "imageReport/";
 const VEHICLE_URL = "vehicle/";
 const POLICY_URL = "policy/";
-
+ 
 AWS.config.update({
   accessKeyId: 'AKIA5TD46D54C2F6DLMX',
   secretAccessKey: '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',
   region: 'us-east-2'
 });
-
+ 
 const config = {
   headers: {
     'Authorization': 'Bearer ' + Cookies.get("token")
   }
 };
-
-
+ 
+ 
 const s3 = new AWS.S3();
-
+ 
 const GeoLocationComponent = () => {
-
+ 
   const [location, setLocation] = useState('');
   const [selectedCar, setSelectedCar] = useState(null);
   const [involvedNames, setInvolvedNames] = useState([]);
@@ -44,8 +43,8 @@ const GeoLocationComponent = () => {
   const incidentOptions = ['','Daño a terceros','Daños físicos a terceros','Asistencia legal','Servicios médicos','Robo total de auto','Auxilio vial','Daño a auto personal'];
   const [declaration, setDeclaration] = useState('');
   const navigate = useNavigate();
-
-  
+ 
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -56,12 +55,12 @@ const GeoLocationComponent = () => {
         alert('Error al recuperar los vehículos, favor de intentar más tarde.');
       }
     };
-  
+ 
     fetchData();
   }, []);
-
-  
-
+ 
+ 
+ 
   useEffect(() => {
     if (selectedCar) {
       const fetchPolicy = async () => {
@@ -97,21 +96,21 @@ const GeoLocationComponent = () => {
       fetchPolicy();
     }
   }, [selectedCar]);
-
-
+ 
+ 
 useEffect(() => {
   setIncidentType('');
 }, []);
-
+ 
   const typePolicy = selectedCar && selectedCar.typePolicy;
   const policyId = selectedCar && selectedCar.policyId;
-
+ 
   const handleCheckboxChange = (car) => {
     setSelectedCar(selectedCar === car ? null : car);
   };
-
-  
-
+ 
+ 
+ 
   const handleGetLocation = () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -128,9 +127,9 @@ useEffect(() => {
         setLocation('La geolocalización no es compatible con este navegador.');
       }
   };
-
-
-
+ 
+ 
+ 
   const handleRegisterInvolved = (names) => {
     const validNameRegex = /^[A-Za-z\s]+$/;
     if(names === '' || names.length > 40 || !validNameRegex.test(names)){
@@ -140,13 +139,13 @@ useEffect(() => {
       setInvolvedNames([...involvedNames, names]);
     }
   };
-
+ 
   const handleRegisterCarDetails = (details) => {
-    
+   
     if(validateData(details)){
       setCarDetails([...carDetails, details]);
     }
-    
+   
   };
   const validateData= (details) =>{
     const validNameRegex = /^[A-Za-z\s]+$/;
@@ -169,21 +168,21 @@ useEffect(() => {
     }
     return result;
   }
-
+ 
   const handleImageUpload = (event) => {
     const uploadedImages = Array.from(event.target.files);
     if(event.target.files.length === 0){
       setImages([]);
       return;
     }
-
+ 
     if(uploadedImages.length + images.length > MAX_IMAGES || uploadedImages.length < MIN_IMAGES){
       alert('selecciona entre '+MIN_IMAGES+' y '+MAX_IMAGES+' imagenes.');
       return;
     }
     setImages([...images, ...uploadedImages]);
   };
-
+ 
   const validateIncidentType = () => {
     let result = true;
     switch(typePolicy){
@@ -205,8 +204,8 @@ useEffect(() => {
     }
     return result;
   }
-
-
+ 
+ 
   const validateFormat = () => {
     let result = true;
     if(selectedCar === null){
@@ -236,8 +235,8 @@ useEffect(() => {
       alert('Ingresa los detalles de los autos.');
       result = false;
     }
-    if(images.length === 0){ 
-     alert('Favor de cargar al menos cuatro imagenes.'); 
+    if(images.length === 0){
+     alert('Favor de cargar al menos cuatro imagenes.');
     }
     if(images.length > MAX_IMAGES || images < MIN_IMAGES){
       alert('selecciona entre '+MIN_IMAGES+' y '+MAX_IMAGES+' imagenes.');
@@ -245,7 +244,7 @@ useEffect(() => {
     }
     return result;
   }
-
+ 
   const handleSendDataToConsole = async () => {
     let involved = '';
     let vehiclesInvolved = '';
@@ -259,10 +258,10 @@ useEffect(() => {
       }
       for(let i =0; i < carDetails.length ; i++){
         if(i === carDetails.length - 1){
-          vehiclesInvolved= vehiclesInvolved+ "Marca: " + carDetails[i].marca + ", Modelo: " + 
+          vehiclesInvolved= vehiclesInvolved+ "Marca: " + carDetails[i].marca + ", Modelo: " +
           carDetails[i].modelo + ", Matrícula: " + carDetails[i].matricula + ", Color: " + carDetails[i].color;
         }else{
-          vehiclesInvolved= vehiclesInvolved+ "Marca: " + carDetails[i].marca + ", Modelo: " + 
+          vehiclesInvolved= vehiclesInvolved+ "Marca: " + carDetails[i].marca + ", Modelo: " +
           carDetails[i].modelo + ", Matrícula: " + carDetails[i].matricula + ", Color: " + carDetails[i].color + "; ";
         }
       }
@@ -273,10 +272,10 @@ useEffect(() => {
             Bucket: 'safedriver2',
             Key: fileName,
             Body: image,
-            ACL: 'public-read', 
-            ContentType: 'image/jpeg', 
+            ACL: 'public-read',
+            ContentType: 'image/jpeg',
           };
-  
+ 
           await s3.upload(params).promise();
           return fileName;
         });
@@ -297,14 +296,14 @@ useEffect(() => {
       if (response.status === 201) {
         const responseData = response.data;
         let result = true;
-        // Realizar el segundo llamado a la API para insertar los nombres de archivo y el ID del reporte
+        console.log('Reporte registrado:', responseData);
         for (const fileNamePromise of uploadPromises) {
           const fileName = await fileNamePromise;
           const imageReportBody = {
             image: "https://safedriver2.s3.us-east-2.amazonaws.com/"+ fileName,
-            reportId: responseData.reportId, 
+            reportId: responseData.reportId,
           };
-
+ 
           const imageReportResponse = await axios.post(IMAGES_URL+"createImageReport", imageReportBody, config);
           if (imageReportResponse.status === 201 && result === true) {
             console.log('Imagen registrada');
@@ -322,29 +321,29 @@ useEffect(() => {
       } else {
         console.error('Error al crear el reporte:', response.status, response.statusText);
       }
-
+ 
     } catch (error) {
       console.log('Error al crear el reporte: ', error);
       alert('Error al registrar el reporte, favor de intentar más tarde.');
     }
   }
 };
-
-
+ 
+ 
   const handleDeleteInvolved = (index) => {
    const updatedNames = [...involvedNames];
    updatedNames.splice(index, 1);
    setInvolvedNames(updatedNames);
   };
-
+ 
   const handleDeleteCarDetails = (index) => {
    const updatedDetails = [...carDetails];
    updatedDetails.splice(index, 1);
    setCarDetails(updatedDetails);
   };
-
-
-
+ 
+ 
+ 
   return (
     <div>
       <NavBarDriver />
@@ -365,7 +364,7 @@ useEffect(() => {
             <tr
               key={car.vehicleId}
               className={selectedCar && selectedCar.vehicleId === car.vehicleId ? 'selected' : ''}
-
+ 
             >
               <td>{car.brand}</td>
               <td>{car.model}</td>
@@ -389,7 +388,7 @@ useEffect(() => {
       <br></br>
       {/* ComboBox para seleccionar el tipo de incidente */}
       <br></br>
-      <label>Tipo de Incidente:</label> 
+      <label>Tipo de Incidente:</label>
       <select
         value={incidentType}
         onChange={(e) => setIncidentType(e.target.value)}
@@ -402,7 +401,7 @@ useEffect(() => {
       </select>
       <br></br>
       <br></br>  
-       {/* Textbox para registrar la declaración */}   
+       {/* Textbox para registrar la declaración */}  
       <label>Declaración:</label>
       <textarea
         value={declaration}
@@ -424,7 +423,7 @@ useEffect(() => {
         <input type="text" name="names" required />
         <button type="submit">Registrar Involucrados</button>
       </form>
-
+ 
       {/* Tabla para mostrar los nombres de involucrados */}
       <Table striped bordered hover>
         <thead>
@@ -467,7 +466,7 @@ useEffect(() => {
         <input type="text" name="color" placeholder="Color" required />
         <button type="submit">Registrar Detalles del Auto</button>
       </form>
-
+ 
       {/* Tabla para mostrar los detalles de los autos */}
       <Table striped bordered hover>
         <thead>
@@ -501,10 +500,10 @@ useEffect(() => {
         }}
       >
         <label>Cargar Imágenes:</label>
-        <input 
-        type="file" 
-        name="images" 
-        multiple 
+        <input
+        type="file"
+        name="images"
+        multiple
         accept='image/*'
         onChange={handleImageUpload} />
       </form>
@@ -512,5 +511,5 @@ useEffect(() => {
     </div>
   );
 };
-
+ 
 export default GeoLocationComponent;
