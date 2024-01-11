@@ -15,11 +15,7 @@ const IMAGES_URL = "imageReport/";
 const VEHICLE_URL = "vehicle/";
 const POLICY_URL = "policy/";
 
-AWS.config.update({
-  accessKeyId: 'AKIA5TD46D54C2F6DLMX',
-  secretAccessKey: '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',
-  region: 'us-east-2'
-});
+
 
 const config = {
   headers: {
